@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
 <includeClasses>
+<classEntry path="eu.powdermonkey.events.EventSynchronizer"/>
+<classEntry path="eu.powdermonkey.events.FlowStateActiveEvent"/>
+<classEntry path="eu.powdermonkey.resourcemanagement.ILoadable"/>
+<classEntry path="eu.powdermonkey.collections.VectorIterator"/>
+<classEntry path="eu.powdermonkey.maths.LineSegment"/>
+<classEntry path="eu.powdermonkey.events.SyncEvent"/>
+<classEntry path="eu.powdermonkey.view.DisplayObjectList"/>
+<classEntry path="eu.powdermonkey.resourcemanagement.ResourceLoader"/>
+<classEntry path="eu.powdermonkey.maths.Range"/>
+<classEntry path="eu.powdermonkey.events.EventTimer"/>
 <classEntry path="eu.powdermonkey.collections.ArrayIterator"/>
 <classEntry path="eu.powdermonkey.collections.IIterator"/>
-<classEntry path="eu.powdermonkey.collections.IteratorCollection"/>
-<classEntry path="eu.powdermonkey.collections.VectorIterator"/>
 <classEntry path="eu.powdermonkey.events.EventDispatcherFlow"/>
-<classEntry path="eu.powdermonkey.events.EventSynchronizer"/>
-<classEntry path="eu.powdermonkey.events.SyncEvent"/>
-<classEntry path="eu.powdermonkey.maths.LineSegment"/>
-<classEntry path="eu.powdermonkey.maths.Range"/>
-<classEntry path="eu.powdermonkey.resourcemanagement.ILoadable"/>
-<classEntry path="eu.powdermonkey.resourcemanagement.LoadingSequence"/>
 <classEntry path="eu.powdermonkey.resourcemanagement.LoadingSequenceEvent"/>
-<classEntry path="eu.powdermonkey.resourcemanagement.ResourceLoader"/>
+<classEntry path="eu.powdermonkey.collections.IteratorCollection"/>
+<classEntry path="eu.powdermonkey.resourcemanagement.LoadingSequence"/>
 <classEntry path="eu.powdermonkey.resourcemanagement.SoundResource"/>
+<classEntry path="eu.powdermonkey.events.EventForwarder"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>

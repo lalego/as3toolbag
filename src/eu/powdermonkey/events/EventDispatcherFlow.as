@@ -11,23 +11,21 @@ package eu.powdermonkey.events
 	{
 		private static const TRIGGER_EVENT_TYPE:String = Event.COMPLETE
 		
-		private var _states:IIterator
+		private var _states:Array
+		
+		private var _statesIterator:IIterator
 		
 		private var _active:IEventDispatcher 
 		
 		public function EventDispatcherFlow(states:Array /* of IIterator */)
 		{
-			_states = new ArrayIterator(states)
+			_states = states
 		}
 		
 		public function start():void
 		{
+			_statesIterator = new ArrayIterator(_states)
 			activateNextState()
-		}
-		
-		public function pause():void
-		{
-			
 		}
 		
 		public function get isStarted():Boolean
@@ -42,9 +40,11 @@ package eu.powdermonkey.events
 				_active.removeEventListener(TRIGGER_EVENT_TYPE, onTrigger) 
 			}
 			
-			if (_states.hasNext)
+			if (_statesIterator.hasNext)
 			{
-				_active = _states.next()
+				var deactivated:IEventDispatcher = _active
+				_active = _statesIterator.next()
+				dispatchEvent(new FlowStateActiveEvent(FlowStateActiveEvent.ACTIVE, _active, deactivated))
 				_active.addEventListener(TRIGGER_EVENT_TYPE, onTrigger)
 			}
 			else
