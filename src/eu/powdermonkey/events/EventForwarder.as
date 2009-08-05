@@ -33,7 +33,7 @@ package eu.powdermonkey.events
 				},
 				false,
 				0,
-				true
+				useWeakReference
 			)
 		}
 	}

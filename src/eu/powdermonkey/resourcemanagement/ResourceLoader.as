@@ -1,22 +1,28 @@
 package eu.powdermonkey.resourcemanagement
 {
+	import eu.powdermonkey.events.EventUtil;
+	
 	import flash.display.Loader;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.ProgressEvent;
-	import flash.events.SampleDataEvent;
 	import flash.media.Sound;
+	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 
-	public class ResourceLoader extends EventDispatcher
+	public class ResourceLoader extends EventDispatcher implements ILoadable
 	{
 		private var _url:String
 		
-		private var _loader:Loader
+		private var _content:*
 		
-		private var _sound:Sound
+		private var _isLoading:Boolean = false
+		
+		private var _isLoaded:Boolean = false
+		
+		private var _hasFailed:Boolean = false
 		
 		public function ResourceLoader(url:String)
 		{
@@ -28,35 +34,94 @@ package eu.powdermonkey.resourcemanagement
 			return url.search(/\.mp3$/) >= 0
 		}
 		
+		private function isURLBinary(url:String):Boolean
+		{
+			return url.search(/\.(swf|png|jpg|jpeg|gif)$/) >= 0
+		}
+		
 		public function load():void
 		{
-			if (isURLAudio(url))
-			{
-				_sound = new Sound()
-				_sound.addEventListener(Event.ACTIVATE, passOnEvent)
-				_sound.addEventListener(Event.COMPLETE, passOnEvent)
-				_sound.addEventListener(Event.DEACTIVATE, passOnEvent)
-				_sound.addEventListener(Event.ID3, passOnEvent)
-				_sound.addEventListener(Event.OPEN, passOnEvent)
-				_sound.addEventListener(IOErrorEvent.IO_ERROR, passOnEvent)
-				_sound.addEventListener(ProgressEvent.PROGRESS, passOnEvent)
-				_sound.addEventListener(SampleDataEvent.SAMPLE_DATA, passOnEvent)
-				_sound.load(new URLRequest(_url))
-			}
-			else
-			{
-				_loader = new Loader()
-				_loader.contentLoaderInfo.addEventListener(Event.ACTIVATE, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(Event.DEACTIVATE, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(Event.INIT, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(Event.OPEN, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(Event.UNLOAD, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(HTTPStatusEvent.HTTP_STATUS, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, passOnEvent)
-				_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, passOnEvent)
-				_loader.load(new URLRequest(_url))
-			}
+			if (isURLAudio(_url))			loadAudioResource(_url)
+			else if (isURLBinary(_url))		loadBinaryResource(_url)
+			else							loadTextResource(_url)
+		}
+		
+		private function loadAudioResource(url:String):void
+		{
+			var sound:Sound = new Sound()
+				
+			var eventTypes:Array = 
+			[
+				Event.ACTIVATE, Event.DEACTIVATE, Event.ID3, 
+				Event.OPEN, Event.UNLOAD, IOErrorEvent.IO_ERROR, 
+				ProgressEvent.PROGRESS
+			]
+			
+			sound.addEventListener
+			(
+				Event.COMPLETE,
+				function (event:Event):void 
+				{
+					_content = sound
+					passOnEvent(event)
+				}
+			)
+			
+			EventUtil.listenForAll(sound, passOnEvent, eventTypes)
+			
+			sound.load(new URLRequest(url))
+		}
+		
+		private function loadTextResource(url:String):void
+		{
+			var urlLoader:URLLoader = new URLLoader()
+				
+			var eventTypes:Array = 
+			[
+				Event.ACTIVATE, Event.DEACTIVATE, Event.INIT, 
+				Event.OPEN, Event.UNLOAD, HTTPStatusEvent.HTTP_STATUS, 
+				IOErrorEvent.IO_ERROR, ProgressEvent.PROGRESS
+			]
+			
+			urlLoader.addEventListener
+			(
+				Event.COMPLETE,
+				function (event:Event):void 
+				{
+					_content = urlLoader.data
+					passOnEvent(event)
+				}
+			)
+			
+			EventUtil.listenForAll(urlLoader, passOnEvent, eventTypes)
+
+			urlLoader.load(new URLRequest(url))
+		}
+		
+		private function loadBinaryResource(url:String):void
+		{
+			var loader:Loader = new Loader()
+				
+			var eventTypes:Array = 
+			[
+				Event.ACTIVATE, Event.DEACTIVATE, Event.INIT, 
+				Event.OPEN, Event.UNLOAD, HTTPStatusEvent.HTTP_STATUS, 
+				IOErrorEvent.IO_ERROR, ProgressEvent.PROGRESS
+			]
+			
+			loader.contentLoaderInfo.addEventListener
+			(
+				Event.COMPLETE,
+				function (event:Event):void 
+				{
+					_content = loader.contentLoaderInfo.content
+					passOnEvent(event)
+				}
+			)
+			
+			EventUtil.listenForAll(loader.contentLoaderInfo, passOnEvent, eventTypes)
+			
+			loader.load(new URLRequest(url))
 		}
 		
 		public function get url():String
@@ -66,14 +131,22 @@ package eu.powdermonkey.resourcemanagement
 		
 		public function get content():*
 		{
-			if (_sound != null)
-			{
-				return _sound
-			}
-			else
-			{
-				return _loader.contentLoaderInfo.content
-			}
+			return _content
+		}
+		
+		public function get isLoading():Boolean
+		{
+			return _isLoading
+		}
+		
+		public function get isLoaded():Boolean
+		{
+			return _isLoaded
+		}
+		
+		public function get hasFailed():Boolean
+		{
+			return _hasFailed
 		}
 		
 		private function passOnEvent(event:Event):void

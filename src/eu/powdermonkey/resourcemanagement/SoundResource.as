@@ -1,7 +1,7 @@
 package eu.powdermonkey.resourcemanagement
 {
-//	import caurina.transitions.Tweener;
-//	import caurina.transitions.properties.SoundShortcuts;
+	import caurina.transitions.Tweener;
+	import caurina.transitions.properties.SoundShortcuts;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -10,7 +10,7 @@ package eu.powdermonkey.resourcemanagement
 	import flash.media.SoundTransform;
 	import flash.net.URLRequest;
 	
-	public class SoundResource extends EventDispatcher implements ILoadable
+	public class SoundResource extends EventDispatcher
 	{
 		private var _sound:Sound
 		
@@ -26,8 +26,11 @@ package eu.powdermonkey.resourcemanagement
 		
 		private var _isPlaying:Boolean = false
 		
+		private var _isLoaded:Boolean
+		
 		public function SoundResource(sound:Sound)
 		{
+			SoundShortcuts.init()
 			_sound = sound
 		}
 		
@@ -48,7 +51,22 @@ package eu.powdermonkey.resourcemanagement
 		
 		public function set pan(leftRight:Number):void 
 		{
-			_pan = leftRight		
+			_pan = leftRight
+			
+			if (isPlaying)
+			{
+				updateSoundTransform()	
+			}		
+		}
+		
+		private function updateSoundTransform():void
+		{
+			var transform:SoundTransform = _soundChannel.soundTransform
+			
+			transform.pan = _pan
+			transform.volume = _volume
+				
+			_soundChannel.soundTransform = transform
 		}
 		
 		public function get volume():Number 
@@ -86,44 +104,34 @@ package eu.powdermonkey.resourcemanagement
 			return _sound.length
 		}
 		
-		public function load():void
-		{
-			_sound.load(new URLRequest(_url))
-		}
-		
 		public function play():SoundChannel 
 		{
 			_soundChannel = _sound.play(0, isInfinteLoop ? int.MAX_VALUE : _loopAmount)
 			_isPlaying = true 
 			_soundChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete, false, 0, true)
 			
-			var transform:SoundTransform = _soundChannel.soundTransform		
-			
-			transform.volume = _volume
-			transform.pan = pan
-				
-			_soundChannel.soundTransform = transform
+			updateSoundTransform()
 			
 			return _soundChannel
 		}
 		
-//		public function playToVolume(volumeTarget:Number=1, timeMilli:int=1000):void
-//		{
-//			if (isPlaying == false)
-//			{
-//				play()
-//			}
-//			
-//			Tweener.addTween
-//			(
-//				_soundChannel,
-//				{
-//					_sound_volume: volumeTarget,
-//					time: timeMilli / 1000,
-//					transition: "linear"
-//				}
-//			)
-//		}
+		public function playToVolume(volumeTarget:Number=1, timeMilli:int=1000):void
+		{
+			if (isPlaying == false)
+			{
+				play()
+			}
+			
+			Tweener.addTween
+			(
+				_soundChannel,
+				{
+					_sound_volume: volumeTarget,
+					time: timeMilli / 1000,
+					transition: "linear"
+				}
+			)
+		}
 		
 		public function get isPlaying():Boolean
 		{
@@ -146,26 +154,26 @@ package eu.powdermonkey.resourcemanagement
 			}
 		}
 		
-//		public function stopToVolume(volumeTarget:Number=0, timeMilli:int=1000):void
-//		{
-//			if (isPlaying)
-//			{
-//				Tweener.addTween
-//				(
-//					_soundChannel,
-//					{
-//						_sound_volume: volumeTarget,
-//						time: timeMilli / 1000,
-//						transition: "linear",
-//						onComplete: 
-//							function ():void
-//							{
-//								stop()
-//							}
-//					}
-//				)
-//			}
-//		}
+		public function stopToVolume(volumeTarget:Number=0, timeMilli:int=1000):void
+		{
+			if (isPlaying)
+			{
+				Tweener.addTween
+				(
+					_soundChannel,
+					{
+						_sound_volume: volumeTarget,
+						time: timeMilli / 1000,
+						transition: "linear",
+						onComplete: 
+							function ():void
+							{
+								stop()
+							}
+					}
+				)
+			}
+		}
 		
 		override public function toString():String 
 		{
