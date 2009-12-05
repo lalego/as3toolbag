@@ -7,6 +7,8 @@ package eu.powdermonkey.io
 	{
 		function load():void
 		
+		function get id():String
+		
 		function get isLoading():Boolean
 		
 		function get isLoaded():Boolean

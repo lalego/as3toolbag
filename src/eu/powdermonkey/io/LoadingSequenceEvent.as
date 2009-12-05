@@ -8,9 +8,9 @@ package eu.powdermonkey.io
 		
 		private var _resource:ResourceLoader
 		
-		public function LoadingSequenceEvent(resource:ResourceLoader, type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function LoadingSequenceEvent(resource:ResourceLoader, type:String)
 		{
-			super(type, bubbles, cancelable);
+			super(type, false, false);
 			_resource = resource
 		}
 		
@@ -26,7 +26,7 @@ package eu.powdermonkey.io
 		
 		override public function clone():Event
 		{
-			return new LoadingSequenceEvent(_resource, type, bubbles, cancelable)
+			return new LoadingSequenceEvent(_resource, type)
 		}
 	}
 }

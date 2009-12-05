@@ -5,9 +5,16 @@ package eu.powdermonkey.io
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.HTTPStatusEvent;
 	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
 	
+	[Event(name="complete", type="flash.events.Event")]
+	[Event(name="ioError", type="flash.events.IOErrorEvent")]
+	[Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
+	[Event(name="securityError", type="flash.events.SecurityErrorEvent")]
+	[Event(name="progress", type="eu.powdermonkey.resourcemanagement.LoadingSequenceProgressEvent")]
+	[Event(name="resourceLoaded", type="eu.powdermonkey.resourcemanagement.LoadingSequenceEvent")]
 	public class LoadingSequence extends EventDispatcher implements ILoadable
 	{
 		private var _awaitingLoadIterator:IIterator
@@ -30,6 +37,11 @@ package eu.powdermonkey.io
 		{
 			_resourcesToLoad = loadables.length
 			_awaitingLoadIterator = new ArrayIterator(loadables)
+		}
+		
+		public function get id():String
+		{
+			return toString()
 		}
 		
 		public function load():void
@@ -65,11 +77,9 @@ package eu.powdermonkey.io
 				}
 				else
 				{
-					loadable.addEventListener(Event.COMPLETE, onLoadableLoaded, false, 0, true)
-					loadable.addEventListener(LoadingSequenceProgressEvent.PROGRESS, onLoadableProgress, false, 0, true)
-					loadable.addEventListener(IOErrorEvent.IO_ERROR, onLoadIOError, false, 0, true)
+					addlistenersToLoadable(loadable)
 					loadable.load()
-					_loading = loadable	
+					_loading = loadable
 				}
 			}
 			else
@@ -78,6 +88,22 @@ package eu.powdermonkey.io
 				_isLoaded = true
 				dispatchEvent(new Event(Event.COMPLETE))
 			}
+		}
+		
+		private function addlistenersToLoadable(loadable:ILoadable):void
+		{
+			loadable.addEventListener(Event.COMPLETE, onLoadableLoaded)
+			loadable.addEventListener(LoadingSequenceProgressEvent.PROGRESS, onLoadableProgress)
+			loadable.addEventListener(IOErrorEvent.IO_ERROR, onLoadIOError)
+			loadable.addEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus)
+		}
+		
+		private function removelistenersFromLoadable(loadable:ILoadable):void
+		{
+			loadable.removeEventListener(Event.COMPLETE, onLoadableLoaded)
+			loadable.removeEventListener(LoadingSequenceProgressEvent.PROGRESS, onLoadableProgress)
+			loadable.removeEventListener(IOErrorEvent.IO_ERROR, onLoadIOError)
+			loadable.removeEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus)
 		}
 		
 		private function onLoadableProgress(event:LoadingSequenceProgressEvent):void
@@ -103,6 +129,7 @@ package eu.powdermonkey.io
 				dispatchEvent(new LoadingSequenceEvent(resourceLoader, LoadingSequenceEvent.RESOURCE_LOADED))
 			}
 			
+			removelistenersFromLoadable(loadable)
 			tryLoadNext()
 		}
 		
@@ -111,6 +138,16 @@ package eu.powdermonkey.io
 			var loadable:IEventDispatcher = IEventDispatcher(event.target)
 			_hasFailed = true 
 			_failures.push(loadable)
+			dispatchEvent(event)
+		}
+		
+		public function get loadingID():String
+		{
+			return _loading.id
+		}
+		
+		public function onHttpStatus(event:HTTPStatusEvent):void
+		{
 			dispatchEvent(event)
 		}
 	}
