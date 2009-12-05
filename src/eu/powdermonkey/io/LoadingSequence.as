@@ -1,4 +1,4 @@
-package eu.powdermonkey.resourcemanagement
+package eu.powdermonkey.io
 {
 	import eu.powdermonkey.collections.ArrayIterator;
 	import eu.powdermonkey.collections.IIterator;

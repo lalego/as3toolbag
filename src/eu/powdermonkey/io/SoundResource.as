@@ -1,4 +1,4 @@
-package eu.powdermonkey.resourcemanagement
+package eu.powdermonkey.io
 {
 	import caurina.transitions.Tweener;
 	import caurina.transitions.properties.SoundShortcuts;
