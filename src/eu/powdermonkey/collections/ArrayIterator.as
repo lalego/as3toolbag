@@ -15,8 +15,6 @@ package eu.powdermonkey.collections
 			_collection = collection
 		}
 		
-		//-----------------------------------------------------
-		
 		public function get hasNext():Boolean
 		{
 			return _index < _collection.length
@@ -28,8 +26,6 @@ package eu.powdermonkey.collections
 			_index++
 			return nextElement
 		}
-			
-		//-----------------------------------------------------
 		
 		override flash_proxy function nextNameIndex (index:int):int
 		{
@@ -48,11 +44,9 @@ package eu.powdermonkey.collections
 			return _collection[index - 1]		
 		}
 		
-		//-----------------------------------------------------
-		
 		public function toString():String
 		{
-			return '[ArrayIterator]'
+			return _collection.toString()
 		}
 	}
 }
