@@ -5,64 +5,113 @@ package eu.powdermonkey.resourcemanagement
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
 	import flash.events.IOErrorEvent;
-	import flash.events.ProgressEvent;
-	import flash.utils.Dictionary;
 	
-	public class LoadingSequence extends EventDispatcher
+	public class LoadingSequence extends EventDispatcher implements ILoadable
 	{
 		private var _awaitingLoadIterator:IIterator
 		
-		private var _loading:Dictionary = new Dictionary()
+		private var _resourcesToLoad:int = 0
 		
-		private var _completed:Array = []
+		private var _resourcesLoaded:int = 0
+		
+		private var _loading:ILoadable
 		
 		private var _failures:Array = []
 		
-		public function LoadingSequence(resourceLoaders:Array /* of ResourceLoader */)
+		private var _isLoading:Boolean = false
+		
+		private var _isLoaded:Boolean = false
+		
+		private var _hasFailed:Boolean = false
+		
+		public function LoadingSequence(loadables:Array /* of ILoadable */)
 		{
-			_awaitingLoadIterator = new ArrayIterator(resourceLoaders)
+			_resourcesToLoad = loadables.length
+			_awaitingLoadIterator = new ArrayIterator(loadables)
 		}
 		
 		public function load():void
 		{
+			_isLoading = true
 			tryLoadNext()
+		}
+		
+		public function get isLoading():Boolean
+		{
+			return _isLoading
+		}
+		
+		public function get isLoaded():Boolean
+		{
+			return _isLoaded
+		}
+		
+		public function get hasFailed():Boolean
+		{
+			return _hasFailed
 		}
 		
 		private function tryLoadNext():void
 		{
 			if (_awaitingLoadIterator.hasNext)
 			{
-				var loader:ResourceLoader = _awaitingLoadIterator.next()
-				loader.addEventListener(Event.COMPLETE, onLoadComplete)
-				loader.addEventListener(ProgressEvent.PROGRESS, onProgress)
-				loader.addEventListener(IOErrorEvent.IO_ERROR, onLoadIOError)
-				loader.load()
+				var loadable:ILoadable = _awaitingLoadIterator.next()
+				
+				if (loadable.isLoaded)
+				{ 
+					tryLoadNext()
+				}
+				else
+				{
+					loadable.addEventListener(Event.COMPLETE, onLoadableLoaded, false, 0, true)
+					loadable.addEventListener(LoadingSequenceProgressEvent.PROGRESS, onLoadableProgress, false, 0, true)
+					loadable.addEventListener(IOErrorEvent.IO_ERROR, onLoadIOError, false, 0, true)
+					loadable.load()
+					_loading = loadable	
+				}
 			}
 			else
 			{
+				_isLoading = false
+				_isLoaded = true
 				dispatchEvent(new Event(Event.COMPLETE))
 			}
 		}
 		
-		private function onProgress(event:ProgressEvent):void
+		private function onLoadableProgress(event:LoadingSequenceProgressEvent):void
 		{
-			
+			var progressStart:Number = Number(_resourcesLoaded) / _resourcesToLoad
+			var progressEnd:Number = Number(_resourcesLoaded + 1) / _resourcesToLoad
+			var progress:Number = progressStart + (event.progress * (progressEnd - progressStart))
+			dispatchEvent(new LoadingSequenceProgressEvent(progress))
 		}
 		
-		private function onLoadComplete(event:Event):void
+		private function onLoadableLoaded(event:Event):void
 		{
-			var loader:ResourceLoader = ResourceLoader(event.target) 
-			delete _loading[loader]
-			dispatchEvent(new LoadingSequenceEvent(loader, LoadingSequenceEvent.RESOURCE_LOADED))
+			_loading = null
+			var loadable:ILoadable = ILoadable(event.target)
+			_resourcesLoaded++
+			
+			var progress:Number = Number(_resourcesLoaded) / _resourcesToLoad
+			dispatchEvent(new LoadingSequenceProgressEvent(progress))
+			
+			if (loadable is ResourceLoader)
+			{
+				var resourceLoader:ResourceLoader = ResourceLoader(loadable)
+				dispatchEvent(new LoadingSequenceEvent(resourceLoader, LoadingSequenceEvent.RESOURCE_LOADED))
+			}
+			
 			tryLoadNext()
 		}
 		
 		private function onLoadIOError(event:IOErrorEvent):void
 		{
-			var loader:ResourceLoader = ResourceLoader(event.target) 
-			delete _loading[loader]
-			_failures.push(loader)
+			var loadable:IEventDispatcher = IEventDispatcher(event.target)
+			_hasFailed = true 
+			_failures.push(loadable)
+			dispatchEvent(event)
 		}
 	}
 }
