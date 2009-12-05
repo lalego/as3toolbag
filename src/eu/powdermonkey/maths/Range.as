@@ -21,7 +21,7 @@ package eu.powdermonkey.maths
 		
 		public static function isWithinUnitRange(value:Number):Boolean
 		{
-			return _unitRange.isWithin(value)
+			return _unitRange.contains(value)
 		}
 		
 		public static function createRangeZeroUpto(max:Number):Range
@@ -31,7 +31,7 @@ package eu.powdermonkey.maths
 		
 		public static function isWithinRangeZeroUpto(max:Number, value:Number):Boolean
 		{
-			return createRangeZeroUpto(max).isWithin(value)
+			return createRangeZeroUpto(max).contains(value)
 		}
 		
 		public static function isOutsideRangeZeroUpto(max:Number, value:Number):Boolean
@@ -58,6 +58,17 @@ package eu.powdermonkey.maths
 			}
 		}
 		
+		private function swapValues(min:Number, max:Number):void
+		{
+			_min = max
+			_max = min			
+		}
+		
+		public function clone():Range
+		{
+			return new Range(_min, _max)
+		}
+		
 		public function cloneMin(newMax:Number):Range
 		{
 			return new Range(_min, newMax)
@@ -75,12 +86,6 @@ package eu.powdermonkey.maths
 			else				return value 
 		}
 		
-		private function swapValues(min:Number, max:Number):void
-		{
-			_min = max
-			_max = min			
-		}
-		
 		public function get randomValue():Number
 		{
 			return _min + length * Math.random()
@@ -96,9 +101,16 @@ package eu.powdermonkey.maths
 			return _min + length * unit
 		}
 		
-		public function unitValueFromValue(unitValue:Number):Number
+		public function unitValueFromValue(value:Number):Number
 		{
-			return (unitValue - min) / length
+			if (length == 0) return 0
+			else return (value - min) / length
+		}
+		
+		public function unitValueClamped(value:Number):Number
+		{
+			if (length == 0) return 0
+			else return clampToUnitRange((value - min) / length)
 		}
 		
 		public function get length():Number
@@ -111,15 +123,67 @@ package eu.powdermonkey.maths
 			return (_min + length) / 2
 		}
 		
-		public function isWithin(value:Number):Boolean
+		public function contains(value:Number):Boolean
 		{
 			if (value >= _min && value <= _max)		return true
 			else									return false
 		}
 		
+		/**
+		 * @param other the Range to test for intersection with.
+		 * @return true if either Range is intersecting. 
+		 * A Range pair where the two end points are just overlapping is considered an intersection.
+		 * @example Shows how a border case is evaluated.
+		 * <listing version="3.0" >
+		 * 	var a:Range = new Range(10, 15)
+		 *	var b:Range = new Range(15, 25)
+		 * 	a.isIntersecting(b) => true
+		 * </listing> 
+		 */		
+		public function isIntersecting(other:Range):Boolean
+		{
+			// see: http://stackoverflow.com/questions/1558901/one-dimensional-line-segments-ranges-intersection-test-solution-name
+			// for info about this solution.
+			
+			// Here is my original solution:
+			// view crossA and crossB as one dimensional vectors
+			// if they are both facing the same direction (same sign), the ranges are intersecting
+			// the product tests for direction sameness
+			// a product greater of equal to zero means an intersection
+			// var crossA:Number = this._max - other._min
+			// var crossB:Number = other._max - this._min
+			// var product:Number = crossA * crossB
+			// return product >= 0
+
+			return !((this._max < other._min) || (other._max < this._min))
+		}
+		
+		public function intersection(other:Range):Range
+		{
+			var minWithin:Boolean = contains(other.min) || other.contains(max)
+			var maxWithin:Boolean = contains(other.max) || other.contains(min)
+			
+			if (minWithin && maxWithin)
+			{
+				return other.clone()
+			}
+			else if (minWithin)
+			{
+				return new Range(this._min, other.max)
+			}
+			else if (maxWithin)
+			{
+				return new Range(other.min, this._max)
+			}
+			else
+			{
+				return null
+			}
+		}
+		
 		public function isOutside(value:Number):Boolean
 		{
-			return !isWithin(value)
+			return !contains(value)
 		}
 		
 		public function isLessThanMin(value:Number):Boolean
