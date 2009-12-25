@@ -13,8 +13,8 @@ package eu.powdermonkey.io
 	[Event(name="ioError", type="flash.events.IOErrorEvent")]
 	[Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
 	[Event(name="securityError", type="flash.events.SecurityErrorEvent")]
-	[Event(name="progress", type="eu.powdermonkey.resourcemanagement.LoadingSequenceProgressEvent")]
-	[Event(name="resourceLoaded", type="eu.powdermonkey.resourcemanagement.LoadingSequenceEvent")]
+	[Event(name="progress", type="eu.powdermonkey.io.LoadingSequenceProgressEvent")]
+	[Event(name="resourceLoaded", type="eu.powdermonkey.io.LoadingSequenceEvent")]
 	public class LoadingSequence extends EventDispatcher implements ILoadable
 	{
 		private var _awaitingLoadIterator:IIterator
