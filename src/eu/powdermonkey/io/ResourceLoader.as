@@ -3,6 +3,7 @@ package eu.powdermonkey.io
 	import eu.powdermonkey.events.EventUtil;
 	
 	import flash.display.Loader;
+	import flash.events.ErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.HTTPStatusEvent;
@@ -21,7 +22,7 @@ package eu.powdermonkey.io
 	[Event(name="httpStatus", type="flash.events.HTTPStatusEvent")]
 	[Event(name="ioError", type="flash.events.IOErrorEvent")]
 	[Event(name="progress", type="flash.events.ProgressEvent")]
-	public class ResourceLoader extends EventDispatcher implements ILoadable
+	public class ResourceLoader extends EventDispatcher implements IResource
 	{
 		private var _url:String
 		
@@ -36,6 +37,10 @@ package eu.powdermonkey.io
 		private var _isLoaded:Boolean = false
 		
 		private var _hasFailed:Boolean = false
+		
+		private var _loader:Loader
+		
+		private var _failure:Error
 		
 		public function ResourceLoader(url:String, urlVariables:URLVariables=null, id:String = null)
 		{
@@ -97,13 +102,12 @@ package eu.powdermonkey.io
 		{
 			var urlLoader:URLLoader = new URLLoader()
 			
-			var eventTypes:Array = 
-			[
+			var errorEventTypes:Array =[IOErrorEvent.IO_ERROR, SecurityErrorEvent.SECURITY_ERROR]
+			
+			var eventTypes:Array = errorEventTypes.concat([
 				Event.ACTIVATE, Event.DEACTIVATE, Event.INIT, 
-				Event.OPEN, Event.UNLOAD, HTTPStatusEvent.HTTP_STATUS, 
-				IOErrorEvent.IO_ERROR, ProgressEvent.PROGRESS,
-				SecurityErrorEvent.SECURITY_ERROR
-			]
+				Event.OPEN, Event.UNLOAD, HTTPStatusEvent.HTTP_STATUS, ProgressEvent.PROGRESS
+			])
 			
 			urlLoader.addEventListener
 			(
@@ -116,6 +120,7 @@ package eu.powdermonkey.io
 			)
 			
 			EventUtil.addListenerForAll(urlLoader, eventTypes, passOnEvent)
+			EventUtil.addListenerForAll(urlLoader, errorEventTypes, onError)
 			
 			var urlRequest:URLRequest = new URLRequest(url) 
 			
@@ -129,8 +134,8 @@ package eu.powdermonkey.io
 		
 		private function loadBinaryResource(url:String):void
 		{
-			var loader:Loader = new Loader()
-				
+			_loader = new Loader()
+			
 			var eventTypes:Array = 
 			[
 				Event.ACTIVATE, Event.DEACTIVATE, Event.INIT, 
@@ -138,19 +143,31 @@ package eu.powdermonkey.io
 				IOErrorEvent.IO_ERROR, ProgressEvent.PROGRESS
 			]
 			
-			loader.contentLoaderInfo.addEventListener
+			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError)
+			
+			_loader.contentLoaderInfo.addEventListener
 			(
 				Event.COMPLETE,
 				function (event:Event):void 
 				{
-					_content = loader.contentLoaderInfo.content
+					_content = _loader.contentLoaderInfo.content
 					passOnEvent(event)
 				}
 			)
 			
-			EventUtil.addListenerForAll(loader.contentLoaderInfo, eventTypes, passOnEvent)
+			EventUtil.addListenerForAll(_loader.contentLoaderInfo, eventTypes, passOnEvent)
 			
-			loader.load(new URLRequest(url))
+			_loader.load(new URLRequest(url))
+		}
+		
+		private function onError(event:ErrorEvent):void
+		{
+			_failure = new Error(event.text)
+		}
+		
+		protected function get loader():Loader
+		{
+			return _loader
 		}
 		
 		public function get url():String
@@ -181,6 +198,11 @@ package eu.powdermonkey.io
 		public function get hasFailed():Boolean
 		{
 			return _hasFailed
+		}
+		
+		public function get failure():Error
+		{
+			return _failure
 		}
 		
 		private function passOnEvent(event:Event):void

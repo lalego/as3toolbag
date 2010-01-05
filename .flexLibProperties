@@ -1,22 +1,60 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties version="1">
-<includeClasses>
-<classEntry path="eu.powdermonkey.events.EventSynchronizer"/>
-<classEntry path="eu.powdermonkey.events.FlowStateActiveEvent"/>
-<classEntry path="eu.powdermonkey.maths.LineSegment"/>
-<classEntry path="eu.powdermonkey.collections.VectorIterator"/>
-<classEntry path="eu.powdermonkey.events.SyncEvent"/>
-<classEntry path="eu.powdermonkey.resourcemanagement.ResourceLoader"/>
-<classEntry path="eu.powdermonkey.view.DisplayObjectList"/>
-<classEntry path="eu.powdermonkey.maths.Range"/>
-<classEntry path="eu.powdermonkey.collections.IIterator"/>
-<classEntry path="eu.powdermonkey.collections.ArrayIterator"/>
-<classEntry path="eu.powdermonkey.events.EventTimer"/>
-<classEntry path="eu.powdermonkey.events.EventDispatcherFlow"/>
-<classEntry path="eu.powdermonkey.resourcemanagement.SoundResource"/>
-<classEntry path="eu.powdermonkey.collections.IteratorCollection"/>
-<classEntry path="eu.powdermonkey.events.EventForwarder"/>
-</includeClasses>
-<includeResources/>
-<namespaceManifests/>
+  <includeClasses>
+    <classEntry path="eu.powdermonkey.collections.ArrayCycleIterator"/>
+    <classEntry path="eu.powdermonkey.collections.ArrayIterator"/>
+    <classEntry path="eu.powdermonkey.collections.DictionaryUtil"/>
+    <classEntry path="eu.powdermonkey.collections.IIterator"/>
+    <classEntry path="eu.powdermonkey.collections.IListIterator"/>
+    <classEntry path="eu.powdermonkey.collections.Incrementer"/>
+    <classEntry path="eu.powdermonkey.collections.IteratorCollection"/>
+    <classEntry path="eu.powdermonkey.collections.Set"/>
+    <classEntry path="eu.powdermonkey.collections.methods.filterto"/>
+    <classEntry path="eu.powdermonkey.collections.methods.forall"/>
+    <classEntry path="eu.powdermonkey.collections.methods.forallIndexed"/>
+    <classEntry path="eu.powdermonkey.collections.methods.hide"/>
+    <classEntry path="eu.powdermonkey.collections.methods.mapto"/>
+    <classEntry path="eu.powdermonkey.collections.methods.maptoIndexed"/>
+    <classEntry path="eu.powdermonkey.collections.methods.show"/>
+    <classEntry path="eu.powdermonkey.events.EventDispatcherFlow"/>
+    <classEntry path="eu.powdermonkey.events.EventForwarder"/>
+    <classEntry path="eu.powdermonkey.events.EventMemorizer"/>
+    <classEntry path="eu.powdermonkey.events.EventSynchronizer"/>
+    <classEntry path="eu.powdermonkey.events.EventTimer"/>
+    <classEntry path="eu.powdermonkey.events.EventUtil"/>
+    <classEntry path="eu.powdermonkey.events.FlowStateActiveEvent"/>
+    <classEntry path="eu.powdermonkey.events.SyncEvent"/>
+    <classEntry path="eu.powdermonkey.io.EmptyResourceGroup"/>
+    <classEntry path="eu.powdermonkey.io.ILoadable"/>
+    <classEntry path="eu.powdermonkey.io.IResource"/>
+    <classEntry path="eu.powdermonkey.io.LoadingSequence"/>
+    <classEntry path="eu.powdermonkey.io.LoadingSequenceEvent"/>
+    <classEntry path="eu.powdermonkey.io.LoadingSequenceProgressEvent"/>
+    <classEntry path="eu.powdermonkey.io.ResourceGroup"/>
+    <classEntry path="eu.powdermonkey.io.ResourceLoader"/>
+    <classEntry path="eu.powdermonkey.io.ResourceManifest"/>
+    <classEntry path="eu.powdermonkey.io.SWFResourceLoader"/>
+    <classEntry path="eu.powdermonkey.io.SoundResource"/>
+    <classEntry path="eu.powdermonkey.io.SwfSymbolResourceLoader"/>
+    <classEntry path="eu.powdermonkey.io.XMLResourceLoader"/>
+    <classEntry path="eu.powdermonkey.maths.Bounds"/>
+    <classEntry path="eu.powdermonkey.maths.LineSegment"/>
+    <classEntry path="eu.powdermonkey.maths.Maths"/>
+    <classEntry path="eu.powdermonkey.maths.PointRange"/>
+    <classEntry path="eu.powdermonkey.maths.Range"/>
+    <classEntry path="eu.powdermonkey.maths.Tolerance"/>
+    <classEntry path="eu.powdermonkey.maths.methods.cos"/>
+    <classEntry path="eu.powdermonkey.maths.methods.sin"/>
+    <classEntry path="eu.powdermonkey.utils.ColorMatrixFilterUtil"/>
+    <classEntry path="eu.powdermonkey.utils.ColorUtil"/>
+    <classEntry path="eu.powdermonkey.utils.StringUtil"/>
+    <classEntry path="eu.powdermonkey.utils.TimeKeeper"/>
+    <classEntry path="eu.powdermonkey.utils.TimerUtil"/>
+    <classEntry path="eu.powdermonkey.view.DisplayObjectFlow"/>
+    <classEntry path="eu.powdermonkey.view.DisplayObjectList"/>
+    <classEntry path="eu.powdermonkey.view.ExclusiveScreenGroup"/>
+    <classEntry path="eu.powdermonkey.view.StackBuilder"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
 </flexLibProperties>

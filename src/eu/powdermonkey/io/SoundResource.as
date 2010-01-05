@@ -1,19 +1,12 @@
 package eu.powdermonkey.io
 {
-	import caurina.transitions.Tweener;
-	import caurina.transitions.properties.SoundShortcuts;
-	
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
 	import flash.media.SoundTransform;
-	import flash.net.URLRequest;
 	
-	public class SoundResource extends EventDispatcher
+	public class SoundResource extends ResourceLoader
 	{
-		private var _sound:Sound
-		
 		private var _soundChannel:SoundChannel
 		
 		private var _volume:Number = 1
@@ -28,15 +21,14 @@ package eu.powdermonkey.io
 		
 		private var _isLoaded:Boolean
 		
-		public function SoundResource(sound:Sound)
+		public function SoundResource(url:String, id:String=null)
 		{
-			SoundShortcuts.init()
-			_sound = sound
-		}
+			super(url, null, id)
+		}			
 		
 		public function get sound():Sound 
 		{
-			return _sound
+			return content
 		}
 		
 		public function get soundChannel():SoundChannel 
@@ -101,12 +93,12 @@ package eu.powdermonkey.io
 		
 		public function get length():Number
 		{
-			return _sound.length
+			return sound.length
 		}
 		
 		public function play():SoundChannel 
 		{
-			_soundChannel = _sound.play(0, isInfinteLoop ? int.MAX_VALUE : _loopAmount)
+			_soundChannel = sound.play(0, isInfinteLoop ? int.MAX_VALUE : _loopAmount)
 			_isPlaying = true 
 			_soundChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete, false, 0, true)
 			
@@ -115,23 +107,23 @@ package eu.powdermonkey.io
 			return _soundChannel
 		}
 		
-		public function playToVolume(volumeTarget:Number=1, timeMilli:int=1000):void
-		{
-			if (isPlaying == false)
-			{
-				play()
-			}
-			
-			Tweener.addTween
-			(
-				_soundChannel,
-				{
-					_sound_volume: volumeTarget,
-					time: timeMilli / 1000,
-					transition: "linear"
-				}
-			)
-		}
+//		public function playToVolume(volumeTarget:Number=1, timeMilli:int=1000):void
+//		{
+//			if (isPlaying == false)
+//			{
+//				play()
+//			}
+//			
+//			Tweener.addTween
+//			(
+//				_soundChannel,
+//				{
+//					_sound_volume: volumeTarget,
+//					time: timeMilli / 1000,
+//					transition: "linear"
+//				}
+//			)
+//		}
 		
 		public function get isPlaying():Boolean
 		{
@@ -154,30 +146,30 @@ package eu.powdermonkey.io
 			}
 		}
 		
-		public function stopToVolume(volumeTarget:Number=0, timeMilli:int=1000):void
-		{
-			if (isPlaying)
-			{
-				Tweener.addTween
-				(
-					_soundChannel,
-					{
-						_sound_volume: volumeTarget,
-						time: timeMilli / 1000,
-						transition: "linear",
-						onComplete: 
-							function ():void
-							{
-								stop()
-							}
-					}
-				)
-			}
-		}
+//		public function stopToVolume(volumeTarget:Number=0, timeMilli:int=1000):void
+//		{
+//			if (isPlaying)
+//			{
+//				Tweener.addTween
+//				(
+//					_soundChannel,
+//					{
+//						_sound_volume: volumeTarget,
+//						time: timeMilli / 1000,
+//						transition: "linear",
+//						onComplete: 
+//							function ():void
+//							{
+//								stop()
+//							}
+//					}
+//				)
+//			}
+//		}
 		
 		override public function toString():String 
 		{
-			return '[SoundResource sound=' + _sound + ']'
+			return '[SoundResource sound=' + sound + ']'
 		}
 	}
 }

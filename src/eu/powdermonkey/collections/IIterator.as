@@ -5,5 +5,7 @@ package eu.powdermonkey.collections
 		function get hasNext():Boolean
 		
 		function next():*
+		
+		function cloneReset():IIterator
 	}
 }

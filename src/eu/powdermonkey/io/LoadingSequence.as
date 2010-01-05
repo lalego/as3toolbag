@@ -17,15 +17,15 @@ package eu.powdermonkey.io
 	[Event(name="resourceLoaded", type="eu.powdermonkey.io.LoadingSequenceEvent")]
 	public class LoadingSequence extends EventDispatcher implements ILoadable
 	{
-		private var _awaitingLoadIterator:IIterator
+		private var awaitingLoadIterator:IIterator
 		
-		private var _resourcesToLoad:int = 0
+		private var resourcesToLoad:int = 0
 		
-		private var _resourcesLoaded:int = 0
+		protected var resourcesLoaded:int = 0
 		
-		private var _loading:ILoadable
+		private var loading:ILoadable
 		
-		private var _failures:Array = []
+		private var failures:Array = []
 		
 		private var _isLoading:Boolean = false
 		
@@ -33,10 +33,13 @@ package eu.powdermonkey.io
 		
 		private var _hasFailed:Boolean = false
 		
+		private var loadables:Array
+		
 		public function LoadingSequence(loadables:Array /* of ILoadable */)
 		{
-			_resourcesToLoad = loadables.length
-			_awaitingLoadIterator = new ArrayIterator(loadables)
+			this.loadables = loadables
+			resourcesToLoad = loadables.length
+			awaitingLoadIterator = new ArrayIterator(loadables)
 		}
 		
 		public function get id():String
@@ -65,11 +68,16 @@ package eu.powdermonkey.io
 			return _hasFailed
 		}
 		
+		public function get failure():Error
+		{
+			return null
+		}
+		
 		private function tryLoadNext():void
 		{
-			if (_awaitingLoadIterator.hasNext)
+			if (awaitingLoadIterator.hasNext)
 			{
-				var loadable:ILoadable = _awaitingLoadIterator.next()
+				var loadable:ILoadable = awaitingLoadIterator.next()
 				
 				if (loadable.isLoaded)
 				{ 
@@ -79,7 +87,7 @@ package eu.powdermonkey.io
 				{
 					addlistenersToLoadable(loadable)
 					loadable.load()
-					_loading = loadable
+					loading = loadable
 				}
 			}
 			else
@@ -108,19 +116,19 @@ package eu.powdermonkey.io
 		
 		private function onLoadableProgress(event:LoadingSequenceProgressEvent):void
 		{
-			var progressStart:Number = Number(_resourcesLoaded) / _resourcesToLoad
-			var progressEnd:Number = Number(_resourcesLoaded + 1) / _resourcesToLoad
+			var progressStart:Number = Number(resourcesLoaded) / resourcesToLoad
+			var progressEnd:Number = Number(resourcesLoaded + 1) / resourcesToLoad
 			var progress:Number = progressStart + (event.progress * (progressEnd - progressStart))
 			dispatchEvent(new LoadingSequenceProgressEvent(progress))
 		}
 		
 		private function onLoadableLoaded(event:Event):void
 		{
-			_loading = null
+			loading = null
 			var loadable:ILoadable = ILoadable(event.target)
-			_resourcesLoaded++
+			resourcesLoaded++
 			
-			var progress:Number = Number(_resourcesLoaded) / _resourcesToLoad
+			var progress:Number = Number(resourcesLoaded) / resourcesToLoad
 			dispatchEvent(new LoadingSequenceProgressEvent(progress))
 			
 			if (loadable is ResourceLoader)
@@ -137,13 +145,13 @@ package eu.powdermonkey.io
 		{
 			var loadable:IEventDispatcher = IEventDispatcher(event.target)
 			_hasFailed = true 
-			_failures.push(loadable)
+			failures.push(loadable)
 			dispatchEvent(event)
 		}
 		
 		public function get loadingID():String
 		{
-			return _loading.id
+			return loading.id
 		}
 		
 		public function onHttpStatus(event:HTTPStatusEvent):void

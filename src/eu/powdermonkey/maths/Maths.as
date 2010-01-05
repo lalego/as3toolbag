@@ -2,6 +2,10 @@ package eu.powdermonkey.maths
 {
 	public class Maths 
 	{
+		public static const PI:Number = Math.PI
+		
+		public static const PI2:Number = Math.PI * 2
+		
 		private static var hexChars:String = "0123456789ABCDEF";
 		
 		/**

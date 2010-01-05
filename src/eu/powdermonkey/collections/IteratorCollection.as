@@ -17,6 +17,11 @@ package eu.powdermonkey.collections
 			}
 		}
 		
+		public function cloneReset():IIterator
+		{
+			return new IteratorCollection(_iteratorList)
+		}
+		
 		public function addIterator(iterator:IIterator):void
 		{
 			_iteratorList.push(iterator)

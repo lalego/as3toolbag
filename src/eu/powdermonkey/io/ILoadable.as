@@ -14,5 +14,7 @@ package eu.powdermonkey.io
 		function get isLoaded():Boolean
 		
 		function get hasFailed():Boolean
+		
+		function get failure():Error
 	}
 }
