@@ -5,9 +5,9 @@ package eu.powdermonkey.view.methods
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
-	public function stackTopToBottom(container:DisplayObjectContainer, padding:int=0, heightOverride:uint=0):Function
+	public function stackBottomToTop(container:DisplayObjectContainer, padding:int=0, heightOverride:uint=0):Function
 	{
-		var stacker:StackBuilder = new StackBuilder(StackBuilder.TOP_TO_BOTTOM, padding, heightOverride)
+		var stacker:StackBuilder = new StackBuilder(StackBuilder.BOTTOM_TO_TOP, padding, heightOverride)
 		
 		return function (object:DisplayObject):void
 		{

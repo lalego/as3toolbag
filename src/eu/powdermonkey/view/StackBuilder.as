@@ -8,20 +8,20 @@ package eu.powdermonkey.view
 		
 		public static const BOTTOM_TO_TOP:int = 1
 		
-		private var _direction:int
+		private var direction:int
 		
 		private var _offset:int = 0
 		
-		private var _padding:int
+		private var padding:int
 		
-		private var _heightConst:uint
+		private var heightOverride:uint
 		
 		
 		public function StackBuilder(direction:int=-1, padding:int=0, heightOverride:uint=0)
 		{
-			_direction = direction
-			_padding = padding
-			_heightConst = heightConst
+			this.direction = direction
+			this.padding = padding
+			this.heightOverride = heightOverride
 		}
 		
 		
@@ -29,13 +29,13 @@ package eu.powdermonkey.view
 		{
 			if (isDirectionTopToBottom())
 			{
-				element.y = getOffset()
+				element.y = _offset
 				nextOffset(element)
 			}
 			else
 			{
 				nextOffset(element)
-				element.y = getOffset()
+				element.y = _offset
 			}
 			
 			return element
@@ -43,17 +43,17 @@ package eu.powdermonkey.view
 		
 		private function nextOffset(element:DisplayObject):void
 		{
-			if (_heightConst > 0)
+			if (heightOverride > 0)
 			{
-				incrementOffset(_heightConst + _padding)
+				incrementOffset(heightOverride + padding)
 			}
 			else
 			{
-				incrementOffset(element.height + _padding)
+				incrementOffset(element.height + padding)
 			}
 		}
 		
-		private function getOffset():int
+		private function get offset():int
 		{
 			return _offset
 		}
@@ -74,7 +74,7 @@ package eu.powdermonkey.view
 		
 		private function isDirectionTopToBottom():Boolean
 		{
-			return _direction < 0
+			return direction < 0
 		}
 	}		
 }

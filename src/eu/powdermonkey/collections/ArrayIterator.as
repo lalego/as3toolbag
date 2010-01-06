@@ -2,10 +2,11 @@ package eu.powdermonkey.collections
 {
 	import eu.powdermonkey.collections.methods.*;
 	
+	import flash.utils.Dictionary;
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;	
 	
-	public class ArrayIterator extends Proxy implements IListIterator
+	public class ArrayIterator extends Proxy implements IList
 	{
 		private var collection:Array = []
 		
@@ -55,31 +56,44 @@ package eu.powdermonkey.collections
 			return collection[0]
 		}
 		
-		public function get tail():IListIterator
+		public function get tail():IList
 		{
 			return new ArrayIterator(collection.slice(1))
 		}
 		
-		public function map(callback:Function):IListIterator
+		public function map(callback:Function):IList
 		{
 			return new ArrayIterator(collection.map(mapto(callback)))
 		}
 		
-		public function mapIndexed(callback:Function):IListIterator
+		public function mapIndexed(callback:Function):IList
 		{
 			return new ArrayIterator(collection.map(maptoIndexed(callback)))
 		}
 		
-		public function foreach(callback:Function):IListIterator
+		public function foreach(callback:Function):IList
 		{
 			collection.forEach(forall(callback))
 			return this
 		}
 		
-		public function foreachIndexed(callback:Function):IListIterator
+		public function foreachIndexed(callback:Function):IList
 		{
 			collection.forEach(forallIndexed(callback))
 			return this
+		}
+		
+		public function toDictionary(callback:Function):Dictionary
+		{
+			var dictionary:Dictionary = new Dictionary()
+			
+			for each (var child:Object in collection)
+			{
+				var mapping:Object = callback(child)
+				dictionary[mapping.key] = mapping.value
+			}
+			
+			return dictionary
 		}
 		
 		public function toXMLList():XMLList
