@@ -10,23 +10,22 @@ package eu.powdermonkey.view
 		
 		private var _direction:int
 		
-		private var _offset:int
+		private var _offset:int = 0
 		
 		private var _padding:int
 		
 		private var _heightConst:uint
 		
 		
-		public function StackBuilder(direction:int=-1, offset:int=0, padding:int=0, heightConst:uint=0)
+		public function StackBuilder(direction:int=-1, padding:int=0, heightOverride:uint=0)
 		{
 			_direction = direction
-			_offset = offset
 			_padding = padding
 			_heightConst = heightConst
 		}
 		
 		
-		public function positionElement(element:DisplayObject):DisplayObject
+		public function applyNextPosition(element:DisplayObject):DisplayObject
 		{
 			if (isDirectionTopToBottom())
 			{

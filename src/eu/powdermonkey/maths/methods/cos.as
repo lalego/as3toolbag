@@ -1,7 +1,7 @@
 package eu.powdermonkey.maths.methods
-{
-	public function cos(angleRadians:Number):Number
-	{
-		return Math.cos(angleRadians)
-	}
-}
+       {
+         public function cos (a:Number):Number
+         {
+           return Math.cos(a)
+         }
+       }

@@ -1,7 +1,7 @@
 package eu.powdermonkey.maths.methods
        {
-         public function sin (a:Number):Number
+         public function log (a:Number):Number
          {
-           return Math.sin(a)
+           return Math.log(a)
          }
        }
