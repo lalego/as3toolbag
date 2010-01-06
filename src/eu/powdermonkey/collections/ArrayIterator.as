@@ -1,6 +1,7 @@
 package eu.powdermonkey.collections
 {
-	import eu.powdermonkey.collections.methods.*
+	import eu.powdermonkey.collections.methods.*;
+	
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;	
 	
@@ -79,6 +80,25 @@ package eu.powdermonkey.collections
 		{
 			collection.forEach(forallIndexed(callback))
 			return this
+		}
+		
+		public function toXMLList():XMLList
+		{
+			var xml:XML = new XML(<collection></collection>)
+			
+			for each (var child:Object in collection)
+			{
+				if (child.hasOwnProperty('toXML'))
+				{
+					xml.appendChild(child.toXML())
+				}
+				else
+				{
+					xml.appendChild(child)
+				}
+			}
+			
+			return xml.*
 		}
 		
 		public function toString():String

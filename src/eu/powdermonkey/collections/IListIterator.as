@@ -13,5 +13,7 @@ package eu.powdermonkey.collections
 		function foreach(callback:Function):IListIterator
 		
 		function foreachIndexed(callback:Function):IListIterator
+		
+		function toXMLList():XMLList
 	}
 }
