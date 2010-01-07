@@ -1,14 +1,14 @@
 package eu.powdermonkey.view.methods
 {
-	import eu.powdermonkey.view.StackBuilderVertical;
+	import eu.powdermonkey.view.StackBuilderHorizontal;
 	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	
-	public function stackBottomToTop(container:DisplayObjectContainer, padding:int=0, heightOverride:uint=0):Function
+	public function stackLeftToRight(container:DisplayObjectContainer, padding:int=0, heightOverride:uint=0):Function
 	{
-		var stacker:StackBuilderVertical = new StackBuilderVertical(
-			StackBuilderVertical.BOTTOM_TO_TOP, 
+		var stacker:StackBuilderHorizontal = new StackBuilderHorizontal(
+			StackBuilderHorizontal.LEFT_TO_RIGHT, 
 			padding, 
 			heightOverride
 		)

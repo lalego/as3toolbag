@@ -6,15 +6,20 @@ package eu.powdermonkey.collections
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;	
 	
-	public class ArrayIterator extends Proxy implements IList
+	public class ArrayList extends Proxy implements IList
 	{
 		private var collection:Array = []
 		
 		private var index:uint = 0
 		
-		public function ArrayIterator(collection:Array)
+		public function ArrayList(collection:Array)
 		{
 			this.collection = collection
+		}
+		
+		public function get length():int
+		{
+			return collection.length
 		}
 		
 		public function get hasNext():Boolean
@@ -31,7 +36,7 @@ package eu.powdermonkey.collections
 		
 		public function cloneReset():IIterator
 		{
-			return new ArrayIterator(collection)
+			return new ArrayList(collection)
 		}
 		
 		override flash_proxy function nextNameIndex(index:int):int
@@ -58,38 +63,43 @@ package eu.powdermonkey.collections
 		
 		public function get tail():IList
 		{
-			return new ArrayIterator(collection.slice(1))
+			return new ArrayList(collection.slice(1))
 		}
 		
-		public function map(callback:Function):IList
+		public function map(eachPairCallback:Function):IList
 		{
-			return new ArrayIterator(collection.map(mapto(callback)))
+			return new ArrayList(collection.map(mapto(eachPairCallback)))
 		}
 		
-		public function mapIndexed(callback:Function):IList
+		public function mapIndexed(eachPairCallback:Function):IList
 		{
-			return new ArrayIterator(collection.map(maptoIndexed(callback)))
+			return new ArrayList(collection.map(maptoIndexed(eachPairCallback)))
 		}
 		
-		public function foreach(callback:Function):IList
+		public function foreach(eachElementCallback:Function):IList
 		{
-			collection.forEach(forall(callback))
+			collection.forEach(forall(eachElementCallback))
 			return this
 		}
 		
-		public function foreachIndexed(callback:Function):IList
+		public function foreachIndexed(eachElementCallback:Function):IList
 		{
-			collection.forEach(forallIndexed(callback))
+			collection.forEach(forallIndexed(eachElementCallback))
 			return this
 		}
 		
-		public function toDictionary(callback:Function):Dictionary
+		public function toMap(mappingCallback:Function):IMap
+		{
+			return new Map(toDictionary(mappingCallback))
+		}
+		
+		public function toDictionary(mappingCallback:Function):Dictionary
 		{
 			var dictionary:Dictionary = new Dictionary()
 			
-			for each (var child:Object in collection)
+			for each (var child:* in collection)
 			{
-				var mapping:Object = callback(child)
+				var mapping:Object = mappingCallback(child)
 				dictionary[mapping.key] = mapping.value
 			}
 			

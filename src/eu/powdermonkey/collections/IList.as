@@ -8,15 +8,19 @@ package eu.powdermonkey.collections
 		
 		function get tail():IList
 		
-		function map(callback:Function):IList
+		function get length():int
 		
-		function mapIndexed(callback:Function):IList
+		function map(eachPairCallback:Function):IList
 		
-		function foreach(callback:Function):IList
+		function mapIndexed(eachPairCallback:Function):IList
 		
-		function foreachIndexed(callback:Function):IList
+		function foreach(eachElementCallback:Function):IList
 		
-		function toDictionary(callback:Function):Dictionary
+		function foreachIndexed(eachElementCallback:Function):IList
+		
+		function toMap(mappingCallback:Function):IMap
+		
+		function toDictionary(mappingCallback:Function):Dictionary
 		
 		function toXMLList():XMLList
 	}

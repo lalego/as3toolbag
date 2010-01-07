@@ -2,17 +2,21 @@
 <flexLibProperties version="1">
 <includeClasses>
 <classEntry path="eu.powdermonkey.collections.ArrayCycleIterator"/>
-<classEntry path="eu.powdermonkey.collections.ArrayIterator"/>
+<classEntry path="eu.powdermonkey.collections.ArrayList"/>
 <classEntry path="eu.powdermonkey.collections.DictionaryUtil"/>
 <classEntry path="eu.powdermonkey.collections.IIterator"/>
 <classEntry path="eu.powdermonkey.collections.IList"/>
+<classEntry path="eu.powdermonkey.collections.IMap"/>
 <classEntry path="eu.powdermonkey.collections.Incrementer"/>
 <classEntry path="eu.powdermonkey.collections.IteratorCollection"/>
+<classEntry path="eu.powdermonkey.collections.Map"/>
 <classEntry path="eu.powdermonkey.collections.Set"/>
 <classEntry path="eu.powdermonkey.collections.methods.filterto"/>
 <classEntry path="eu.powdermonkey.collections.methods.forall"/>
 <classEntry path="eu.powdermonkey.collections.methods.forallIndexed"/>
 <classEntry path="eu.powdermonkey.collections.methods.hide"/>
+<classEntry path="eu.powdermonkey.collections.methods.map.idObjectMap"/>
+<classEntry path="eu.powdermonkey.collections.methods.map.keyValue"/>
 <classEntry path="eu.powdermonkey.collections.methods.mapto"/>
 <classEntry path="eu.powdermonkey.collections.methods.maptoIndexed"/>
 <classEntry path="eu.powdermonkey.collections.methods.show"/>
@@ -24,6 +28,7 @@
 <classEntry path="eu.powdermonkey.events.EventUtil"/>
 <classEntry path="eu.powdermonkey.events.FlowStateActiveEvent"/>
 <classEntry path="eu.powdermonkey.events.SyncEvent"/>
+<classEntry path="eu.powdermonkey.events.methods.redispatchFrom"/>
 <classEntry path="eu.powdermonkey.io.EmptyResourceGroup"/>
 <classEntry path="eu.powdermonkey.io.ILoadable"/>
 <classEntry path="eu.powdermonkey.io.IResource"/>
@@ -69,12 +74,18 @@
 <classEntry path="eu.powdermonkey.view.DisplayObjectFlow"/>
 <classEntry path="eu.powdermonkey.view.DisplayObjectList"/>
 <classEntry path="eu.powdermonkey.view.ExclusiveScreenGroup"/>
-<classEntry path="eu.powdermonkey.view.StackBuilder"/>
-<classEntry path="eu.powdermonkey.view.methods.addDisplayObject"/>
+<classEntry path="eu.powdermonkey.view.StackBuilderHorizontal"/>
+<classEntry path="eu.powdermonkey.view.StackBuilderVertical"/>
 <classEntry path="eu.powdermonkey.view.methods.addDisplayObjectAt"/>
+<classEntry path="eu.powdermonkey.view.methods.addDisplayObjectHiddenAt"/>
+<classEntry path="eu.powdermonkey.view.methods.addDisplayObjectHiddenTo"/>
+<classEntry path="eu.powdermonkey.view.methods.addDisplayObjectTo"/>
 <classEntry path="eu.powdermonkey.view.methods.hide"/>
+<classEntry path="eu.powdermonkey.view.methods.positionAt"/>
 <classEntry path="eu.powdermonkey.view.methods.show"/>
 <classEntry path="eu.powdermonkey.view.methods.stackBottomToTop"/>
+<classEntry path="eu.powdermonkey.view.methods.stackLeftToRight"/>
+<classEntry path="eu.powdermonkey.view.methods.stackRightToLeft"/>
 <classEntry path="eu.powdermonkey.view.methods.stackTopToBottom"/>
 </includeClasses>
 <includeResources/>

@@ -1,6 +1,6 @@
 package eu.powdermonkey.io
 {
-	import eu.powdermonkey.collections.ArrayIterator;
+	import eu.powdermonkey.collections.ArrayList;
 	import eu.powdermonkey.collections.IIterator;
 	
 	import flash.events.Event;
@@ -39,7 +39,7 @@ package eu.powdermonkey.io
 		{
 			this.loadables = loadables
 			resourcesToLoad = loadables.length
-			awaitingLoadIterator = new ArrayIterator(loadables)
+			awaitingLoadIterator = new ArrayList(loadables)
 		}
 		
 		public function get id():String

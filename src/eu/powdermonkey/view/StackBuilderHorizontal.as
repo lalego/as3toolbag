@@ -2,11 +2,11 @@ package eu.powdermonkey.view
 {
 	import flash.display.DisplayObject;
 	
-	public class StackBuilder
+	public class StackBuilderHorizontal
 	{
-		public static const TOP_TO_BOTTOM:int = -1
+		public static const LEFT_TO_RIGHT:int = 1
 		
-		public static const BOTTOM_TO_TOP:int = 1
+		public static const RIGHT_TO_LEFT:int = -1
 		
 		private var direction:int
 		
@@ -14,14 +14,14 @@ package eu.powdermonkey.view
 		
 		private var padding:int
 		
-		private var heightOverride:uint
+		private var widthOverride:uint
 		
 		
-		public function StackBuilder(direction:int=-1, padding:int=0, heightOverride:uint=0)
+		public function StackBuilderHorizontal(direction:int=-1, padding:int=0, widthOverride:uint=0)
 		{
 			this.direction = direction
 			this.padding = padding
-			this.heightOverride = heightOverride
+			this.widthOverride = widthOverride
 		}
 		
 		
@@ -29,13 +29,13 @@ package eu.powdermonkey.view
 		{
 			if (isDirectionTopToBottom())
 			{
-				element.y = _offset
+				element.x = _offset
 				nextOffset(element)
 			}
 			else
 			{
 				nextOffset(element)
-				element.y = _offset
+				element.x = _offset
 			}
 			
 			return element
@@ -43,13 +43,13 @@ package eu.powdermonkey.view
 		
 		private function nextOffset(element:DisplayObject):void
 		{
-			if (heightOverride > 0)
+			if (widthOverride > 0)
 			{
-				incrementOffset(heightOverride + padding)
+				incrementOffset(widthOverride + padding)
 			}
 			else
 			{
-				incrementOffset(element.height + padding)
+				incrementOffset(element.width + padding)
 			}
 		}
 		

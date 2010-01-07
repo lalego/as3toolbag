@@ -1,6 +1,6 @@
 package eu.powdermonkey.events
 {
-	import eu.powdermonkey.collections.ArrayIterator;
+	import eu.powdermonkey.collections.ArrayList;
 	import eu.powdermonkey.collections.IIterator;
 	
 	import flash.events.Event;
@@ -24,7 +24,7 @@ package eu.powdermonkey.events
 		
 		public function start():void
 		{
-			_statesIterator = new ArrayIterator(_states)
+			_statesIterator = new ArrayList(_states)
 			activateNextState()
 		}
 		
