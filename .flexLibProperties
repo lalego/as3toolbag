@@ -25,6 +25,7 @@
 <classEntry path="eu.powdermonkey.events.EventDispatcherFlow"/>
 <classEntry path="eu.powdermonkey.events.EventForwarder"/>
 <classEntry path="eu.powdermonkey.events.EventMemorizer"/>
+<classEntry path="eu.powdermonkey.events.EventOption"/>
 <classEntry path="eu.powdermonkey.events.EventSynchronizer"/>
 <classEntry path="eu.powdermonkey.events.EventTimer"/>
 <classEntry path="eu.powdermonkey.events.EventUtil"/>
@@ -81,12 +82,15 @@
 <classEntry path="eu.powdermonkey.maths.methods.tan"/>
 <classEntry path="eu.powdermonkey.utils.ColorMatrixFilterUtil"/>
 <classEntry path="eu.powdermonkey.utils.ColorUtil"/>
+<classEntry path="eu.powdermonkey.utils.DisplayUtil"/>
 <classEntry path="eu.powdermonkey.utils.StringUtil"/>
 <classEntry path="eu.powdermonkey.utils.TimeKeeper"/>
 <classEntry path="eu.powdermonkey.utils.TimerUtil"/>
-<classEntry path="eu.powdermonkey.view.DisplayObjectFlow"/>
 <classEntry path="eu.powdermonkey.view.DisplayObjectList"/>
+<classEntry path="eu.powdermonkey.view.DisplaySequence"/>
 <classEntry path="eu.powdermonkey.view.ExclusiveScreenGroup"/>
+<classEntry path="eu.powdermonkey.view.ExclusiveScreenSet"/>
+<classEntry path="eu.powdermonkey.view.IShowable"/>
 <classEntry path="eu.powdermonkey.view.StackBuilderHorizontal"/>
 <classEntry path="eu.powdermonkey.view.StackBuilderVertical"/>
 <classEntry path="eu.powdermonkey.view.methods.addDisplayObjectAt"/>
@@ -94,8 +98,10 @@
 <classEntry path="eu.powdermonkey.view.methods.addDisplayObjectHiddenTo"/>
 <classEntry path="eu.powdermonkey.view.methods.addDisplayObjectTo"/>
 <classEntry path="eu.powdermonkey.view.methods.hide"/>
+<classEntry path="eu.powdermonkey.view.methods.hideOnEvent"/>
 <classEntry path="eu.powdermonkey.view.methods.positionAt"/>
 <classEntry path="eu.powdermonkey.view.methods.show"/>
+<classEntry path="eu.powdermonkey.view.methods.showOnEvent"/>
 <classEntry path="eu.powdermonkey.view.methods.stackBottomToTop"/>
 <classEntry path="eu.powdermonkey.view.methods.stackLeftToRight"/>
 <classEntry path="eu.powdermonkey.view.methods.stackRightToLeft"/>

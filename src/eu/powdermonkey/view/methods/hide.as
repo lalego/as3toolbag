@@ -1,9 +1,17 @@
 package eu.powdermonkey.view.methods
 {
+	import eu.powdermonkey.view.IShowable;
 	import flash.display.DisplayObject;
 	
 	public function hide(object:DisplayObject):void
 	{
-		object.visible = false
+		if (object is IShowable)
+		{
+			IShowable(object).hide()
+		}
+		else
+		{
+			object.visible = false
+		}
 	}
 }

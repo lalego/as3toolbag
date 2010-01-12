@@ -2,69 +2,109 @@ package eu.powdermonkey.view
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.IEventDispatcher;
-	import flash.utils.Dictionary;
 
 	public class ExclusiveScreenGroup extends Sprite
 	{
-		private var _screens:Dictionary = new Dictionary() 
+		public static function build(...screens):ExclusiveScreenGroup
+		{
+			var unrolledScreens:Array = []
+			
+			for each (var screen:DisplayObject in screens)
+			{
+				unrolledScreens.push(screen)
+			}
+			
+			return new ExclusiveScreenGroup(unrolledScreens)
+		}
+		
+		public static function buildOpen(...screens):ExclusiveScreenGroup
+		{
+			var unrolledScreens:Array = []
+			
+			for each (var screen:DisplayObject in screens)
+			{
+				unrolledScreens.push(screen)
+			}
+			
+			return new ExclusiveScreenGroup(unrolledScreens, true)
+		}
 		
 		private var _screenShowing:DisplayObject
 		
-		public function ExclusiveScreenGroup(screens:Array)
+		private var _openToNewMembers:Boolean
+		
+		public function ExclusiveScreenGroup(screens:Array, openToNewMembers:Boolean=false)
 		{
-			prepareScreens(screens)
+			_openToNewMembers = openToNewMembers 
+			
+			for each (var screen:DisplayObject in screens)
+			{
+				addScreen(screen)
+			}
 		}
 		
-		protected function showScreen(clazz:Class):void
+		private function addScreen(screen:DisplayObject):void
 		{
-			if (clazz in _screens)
+			super.addChild(screen)
+			screen.visible = false
+		}
+		
+		public function showScreen(screen:DisplayObject):void
+		{
+			if (_openToNewMembers)
 			{
-				var screen:DisplayObject = _screens[clazz]
-				
-				if (_screenShowing != null)
+				if (contains(screen) == false)
 				{
-					_screenShowing.visible = false
+					addScreen(screen)
 				}
-				
-				_screenShowing = screen
+			}
+			else
+			{
+				if (contains(screen) == false)
+				{
+					throw new Error('screen ('+screen+') is not a member of this group, add it at creation')
+				}
+			}
+			
+			if (_screenShowing != null)
+			{
+				hideScreen(_screenShowing)
+			}
+			
+			showScreenIntern(screen)
+			_screenShowing = screen
+		}
+		
+		private function showScreenIntern(screen:DisplayObject):void
+		{
+			if (screen is IShowable)
+			{
+				IShowable(screen).show()
+			}
+			else
+			{
 				screen.visible = true
 			}
 		}
 		
-		private function prepareScreens(screens:Array):void
+		protected function hideScreen(screen:DisplayObject):void
 		{
-			for each (var screen:DisplayObject in screens)
+			if (screen is IShowable)
 			{
-				var clazz:Class = Object(screen).constructor
-				
-				if (clazz in _screens)
-				{
-					trace('screen ignored, its type(' + clazz +') is already in this exclusive group')
-				}
-				else
-				{
-					_screens[clazz] = screen
-					screen.visible = false
-					addChild(screen)
-				}
+				IShowable(screen).hide()
+			}
+			else
+			{
+				screen.visible = false
 			}
 		}
 		
-		protected function showOnEvent(dispatcher:IEventDispatcher, eventType:String, screenClass:Class):void
+		public function hideCurrent():void
 		{
-			dispatcher.addEventListener
-			(
-				eventType,
-				function (event:Event):void
-				{
-					showScreen(screenClass)
-				},
-				false,
-				0,
-				true
-			)
+			if (_screenShowing != null)
+			{
+				hideScreen(_screenShowing)
+			}	
 		}
 	}
 }

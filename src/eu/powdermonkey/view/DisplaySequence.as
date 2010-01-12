@@ -8,11 +8,11 @@ package eu.powdermonkey.view
 	import flash.display.Sprite;
 	import flash.events.Event;
 
-	public class DisplayObjectFlow extends Sprite 
+	public class DisplaySequence extends Sprite 
 	{
 		private var _eventDispatcherFlow:EventDispatcherFlow
 		
-		public function DisplayObjectFlow(displayObjectList:Array)
+		public function DisplaySequence(displayObjectList:Array)
 		{
 			_eventDispatcherFlow = new EventDispatcherFlow(displayObjectList)
 			EventForwarder.forwardEvent(_eventDispatcherFlow, this, Event.COMPLETE)
