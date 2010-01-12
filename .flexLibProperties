@@ -11,6 +11,7 @@
 <classEntry path="eu.powdermonkey.collections.IteratorCollection"/>
 <classEntry path="eu.powdermonkey.collections.Map"/>
 <classEntry path="eu.powdermonkey.collections.Set"/>
+<classEntry path="eu.powdermonkey.collections.XMLArrayList"/>
 <classEntry path="eu.powdermonkey.collections.methods.filterto"/>
 <classEntry path="eu.powdermonkey.collections.methods.forall"/>
 <classEntry path="eu.powdermonkey.collections.methods.forallIndexed"/>
@@ -20,6 +21,7 @@
 <classEntry path="eu.powdermonkey.collections.methods.mapto"/>
 <classEntry path="eu.powdermonkey.collections.methods.maptoIndexed"/>
 <classEntry path="eu.powdermonkey.collections.methods.show"/>
+<classEntry path="eu.powdermonkey.collections.methods.xmlToList"/>
 <classEntry path="eu.powdermonkey.events.EventDispatcherFlow"/>
 <classEntry path="eu.powdermonkey.events.EventForwarder"/>
 <classEntry path="eu.powdermonkey.events.EventMemorizer"/>
@@ -29,6 +31,7 @@
 <classEntry path="eu.powdermonkey.events.FlowStateActiveEvent"/>
 <classEntry path="eu.powdermonkey.events.SyncEvent"/>
 <classEntry path="eu.powdermonkey.events.methods.redispatchFrom"/>
+<classEntry path="eu.powdermonkey.events.methods.removeWhenFired"/>
 <classEntry path="eu.powdermonkey.io.EmptyResourceGroup"/>
 <classEntry path="eu.powdermonkey.io.ILoadable"/>
 <classEntry path="eu.powdermonkey.io.IResource"/>
@@ -42,6 +45,16 @@
 <classEntry path="eu.powdermonkey.io.SoundResource"/>
 <classEntry path="eu.powdermonkey.io.SwfSymbolResourceLoader"/>
 <classEntry path="eu.powdermonkey.io.XMLResourceLoader"/>
+<classEntry path="eu.powdermonkey.io.logging.AbstractLogger"/>
+<classEntry path="eu.powdermonkey.io.logging.FirebugConsoleLogger"/>
+<classEntry path="eu.powdermonkey.io.logging.ILogger"/>
+<classEntry path="eu.powdermonkey.io.logging.Log"/>
+<classEntry path="eu.powdermonkey.io.logging.LoggerGroup"/>
+<classEntry path="eu.powdermonkey.io.logging.TraceLogger"/>
+<classEntry path="eu.powdermonkey.io.logging.methods.debug"/>
+<classEntry path="eu.powdermonkey.io.logging.methods.error"/>
+<classEntry path="eu.powdermonkey.io.logging.methods.info"/>
+<classEntry path="eu.powdermonkey.io.logging.methods.warning"/>
 <classEntry path="eu.powdermonkey.maths.Bounds"/>
 <classEntry path="eu.powdermonkey.maths.LineSegment"/>
 <classEntry path="eu.powdermonkey.maths.Maths"/>

@@ -1,5 +1,7 @@
 package eu.powdermonkey.collections
 {
+	import eu.powdermonkey.maths.methods.*;
+	
 	import flash.utils.Dictionary;
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
@@ -124,6 +126,19 @@ package eu.powdermonkey.collections
 			return new Map(newDictionary)
 		}
 		
+		public function mapToArray(eachPairCallback:Function):Array
+		{
+			var pairs:Array = [] 
+			
+			for (var key:* in dictionary)
+			{
+				var pair:Object = {key:key, value:dictionary[key]} 
+				pairs.push(eachPairCallback(pair))
+			}
+			
+			return pairs
+		}
+		
 		public function mapIndexed(callback:Function):IList
 		{
 			var newDictionary:Dictionary = new Dictionary() 
@@ -137,6 +152,20 @@ package eu.powdermonkey.collections
 			}
 			
 			return new Map(newDictionary)
+		}
+		
+		public function mapIndexedToArray(eachPairCallback:Function):Array
+		{
+			var pairs:Array = [] 
+			
+			for (var key:* in dictionary)
+			{
+				var pair:Object = {key:key, value:dictionary[key]} 
+				pairs.push(eachPairCallback(pair, index++, length))
+			}
+			
+			return pairs
+
 		}
 		
 		public function foreach(eachPairCallback:Function):IList
@@ -206,6 +235,11 @@ package eu.powdermonkey.collections
 			return this
 		}
 		
+		public function random():*
+		{
+			return _values.random()
+		}
+		
 		public function toMap(mappingCallback:Function):IMap
 		{
 			return new Map(toDictionary(mappingCallback))
@@ -256,6 +290,11 @@ package eu.powdermonkey.collections
 		public function toString():String
 		{
 			return dictionary.toString()
+		}
+		
+		public function toArray():Array
+		{
+			return _values.toArray()
 		}
 	}
 }

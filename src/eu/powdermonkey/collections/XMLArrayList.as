@@ -7,20 +7,27 @@ package eu.powdermonkey.collections
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;	
 	
-	public class ArrayList extends Proxy implements IList
+	public class XMLArrayList extends Proxy implements IList
 	{
-		private var collection:Array = []
+		private var collection:XMLList
+		
+		private var array:Array = []
 		
 		private var index:uint = 0
 		
-		public function ArrayList(collection:Array)
+		public function XMLArrayList(xmlList:XMLList)
 		{
-			this.collection = collection
+			this.collection = xmlList
+			
+			for each (var child:XML in collection)
+			{
+				array.push(child)
+			}
 		}
 		
 		public function get length():int
 		{
-			return collection.length
+			return collection.length()
 		}
 		
 		public function get hasNext():Boolean
@@ -37,12 +44,7 @@ package eu.powdermonkey.collections
 		
 		public function cloneReset():IIterator
 		{
-			return new ArrayList(collection)
-		}
-		
-		override flash_proxy function getProperty(name:*):*
-		{
-			return collection[name]
+			return new XMLArrayList(collection)
 		}
 		
 		override flash_proxy function nextNameIndex(index:int):int
@@ -69,7 +71,7 @@ package eu.powdermonkey.collections
 		
 		public function get tail():IList
 		{
-			return new ArrayList(collection.slice(1))
+			return new ArrayList(array.slice(1))
 		}
 		
 		public function map(eachElementCallback:Function):IList
@@ -79,7 +81,14 @@ package eu.powdermonkey.collections
 		
 		public function mapToArray(eachElementCallback:Function):Array
 		{
-			return collection.map(mapto(eachElementCallback))
+			var array:Array = []
+			
+			for each(var element:XML in collection)
+			{
+				array.push(eachElementCallback(element))
+			}
+			
+			return array
 		}
 		
 		public function mapIndexed(eachElementCallback:Function):IList
@@ -89,25 +98,39 @@ package eu.powdermonkey.collections
 		
 		public function mapIndexedToArray(eachElementCallback:Function):Array
 		{
-			return collection.map(maptoIndexed(eachElementCallback))
+			var array:Array = []
+			var index:int = 0
+			
+			for each(var element:XML in collection)
+			{
+				array.push(eachElementCallback(element, index++, length))
+			}
+			
+			return array
 		}
 		
 		public function foreach(eachElementCallback:Function):IList
 		{
-			collection.forEach(forall(eachElementCallback))
+			for each(var element:XML in collection)
+			{
+				foreach(eachElementCallback)
+			}
 			return this
 		}
 		
 		public function foreachIndexed(eachElementCallback:Function):IList
 		{
-			collection.forEach(forallIndexed(eachElementCallback))
+			for each(var element:XML in collection)
+			{
+				foreachIndexed(eachElementCallback)
+			}
 			return this
 		}
 		
 		public function random():*
 		{
-			var index:int = floor(Math.random() * (collection.length - 1))
-			return collection[index]
+			var index:int = floor(Math.random() * (array.length - 1))
+			return array[index]
 		}
 		
 		public function toMap(mappingCallback:Function):IMap
@@ -130,31 +153,17 @@ package eu.powdermonkey.collections
 		
 		public function toXMLList():XMLList
 		{
-			var xml:XML = new XML(<collection></collection>)
-			
-			for each (var child:Object in collection)
-			{
-				if (child.hasOwnProperty('toXML'))
-				{
-					xml.appendChild(child.toXML())
-				}
-				else
-				{
-					xml.appendChild(child)
-				}
-			}
-			
-			return xml.*
-		}
-		
-		public function toArray():Array
-		{
-			return collection.concat()
+			return collection.copy()
 		}
 		
 		public function toString():String
 		{
 			return collection.toString()
+		}
+		
+		public function toArray():Array
+		{
+			return array.concat()
 		}
 	}
 }
