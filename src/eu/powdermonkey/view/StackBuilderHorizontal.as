@@ -27,7 +27,7 @@ package eu.powdermonkey.view
 		
 		public function applyNextPosition(element:DisplayObject):DisplayObject
 		{
-			if (isDirectionTopToBottom())
+			if (isDirectionLeftToRight())
 			{
 				element.x = _offset
 				nextOffset(element)
@@ -61,7 +61,7 @@ package eu.powdermonkey.view
 		
 		private function incrementOffset(value:int):void
 		{
-			if (isDirectionTopToBottom())
+			if (isDirectionLeftToRight())
 			{
 				_offset += value
 			}
@@ -72,9 +72,9 @@ package eu.powdermonkey.view
 		}
 		
 		
-		private function isDirectionTopToBottom():Boolean
+		private function isDirectionLeftToRight():Boolean
 		{
-			return direction < 0
+			return direction > 0
 		}
 	}		
 }

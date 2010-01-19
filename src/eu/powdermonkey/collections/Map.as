@@ -87,9 +87,24 @@ package eu.powdermonkey.collections
 			return _values.nextValue(index)
 		}
 		
+		public function hasValue(key:*):Boolean
+		{
+			return value(key) != null
+		}
+		
 		public function value(key:*):*
 		{
 			return dictionary[key]
+		}
+		
+		public function get values():IList
+		{
+			return _values
+		}
+		
+		public function hasKey(value:*):Boolean
+		{
+			return key(value) != null
 		}
 		
 		public function key(value:*):*
@@ -235,14 +250,69 @@ package eu.powdermonkey.collections
 			return this
 		}
 		
+		public function filter(eachElementPredicate:Function):IList
+		{
+			return _values.filter(eachElementPredicate)
+		}
+		
+		public function filterMap(eachElementPredicate:Function):IList
+		{
+			return _values.filterMap(eachElementPredicate)
+		}
+		
+		public function partition(eachElementPredicate:Function):IPair
+		{
+			var satisfied:Array = []
+			var unsatisfied:Array = []
+			
+			for each (var element:* in _values)
+			{
+				if (eachElementPredicate(element))
+				{
+					satisfied.push(element)
+				}
+				else
+				{
+					unsatisfied.push(element)
+				}
+			}
+			
+			return new Pair(new ArrayList(satisfied), new ArrayList(unsatisfied))
+		}
+		
+		public function takeWhile(eachElementCallback:Function):IList
+		{
+			return _values.takeWhile(eachElementCallback)
+		}
+		
+		public function concat(list:IList):IList
+		{
+			return _values.concat(list)
+		}
+		
+		public function join(sep:*):String
+		{
+			return _values.join(sep)
+		}
+		
 		public function random():*
 		{
 			return _values.random()
 		}
 		
+		public function slice(startIndex:int = 0, endIndex:int = 16777215):IList
+		{
+			return _values.slice(startIndex, endIndex)
+		}
+		
 		public function toMap(mappingCallback:Function):IMap
 		{
 			return new Map(toDictionary(mappingCallback))
+		}
+		
+		public function toMapIndexed(mappingCallback:Function):IMap
+		{
+			return new Map(toDictionaryIndexed(mappingCallback))
 		}
 		
 		/**
@@ -262,6 +332,21 @@ package eu.powdermonkey.collections
 			{
 				var value:* = dictionary[key]
 				var mapping:Object = mappingCallback(key, value)
+				dictionary[mapping.key] = mapping.value
+			}
+			
+			return dictionary
+		}
+		
+		public function toDictionaryIndexed(mappingCallback:Function):Dictionary
+		{
+			var dictionary:Dictionary = new Dictionary()
+			var index:int = 0
+			
+			for (var key:* in dictionary)
+			{
+				var value:* = dictionary[key]
+				var mapping:Object = mappingCallback(key, value, index++, length)
 				dictionary[mapping.key] = mapping.value
 			}
 			

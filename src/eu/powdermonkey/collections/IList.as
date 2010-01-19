@@ -22,11 +22,29 @@ package eu.powdermonkey.collections
 		
 		function foreachIndexed(eachElementCallback:Function):IList
 		
+		function filter(eachElementPredicate:Function):IList
+		
+		function filterMap(eachElementPredicate:Function):IList
+		
+		function partition(eachElementPredicate:Function):IPair
+		
+		function takeWhile(eachElementPredicate:Function):IList
+		
+		function concat(list:IList):IList
+		
+		function join(sep:*):String
+		
 		function random():*
+		
+		function slice(startIndex:int = 0, endIndex:int = 16777215):IList
 		
 		function toMap(mappingCallback:Function):IMap
 		
+		function toMapIndexed(mappingCallback:Function):IMap
+		
 		function toDictionary(mappingCallback:Function):Dictionary
+		
+		function toDictionaryIndexed(mappingCallback:Function):Dictionary
 		
 		function toXMLList():XMLList
 		

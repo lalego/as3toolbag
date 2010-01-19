@@ -9,6 +9,8 @@ package eu.powdermonkey.collections
 	
 	public class ArrayList extends Proxy implements IList
 	{
+		public static const Empty:IList = new ArrayList([])
+		
 		private var collection:Array = []
 		
 		private var index:uint = 0
@@ -104,15 +106,96 @@ package eu.powdermonkey.collections
 			return this
 		}
 		
+		public function filter(eachElementPredicate:Function):IList
+		{
+			return new ArrayList(collection.filter(filterto(eachElementPredicate)))
+		}
+		
+		public function filterMap(eachElementPredicate:Function):IList
+		{
+			var included:Array = []
+			
+			for each (var element:* in collection)
+			{
+				var newObject:* = eachElementPredicate(element)
+				if (newObject)
+				{
+					included.push(newObject)
+				}
+			}
+			
+			return new ArrayList(included)
+		}
+		
+		public function partition(eachElementPredicate:Function):IPair
+		{
+			var satisfied:Array = []
+			var unsatisfied:Array = []
+			
+			for each (var element:* in collection)
+			{
+				if (eachElementPredicate(element))
+				{
+					satisfied.push(element)
+				}
+				else
+				{
+					unsatisfied.push(element)
+				}
+			}
+			
+			return new Pair(new ArrayList(satisfied), new ArrayList(unsatisfied))
+		}
+		
+		public function takeWhile(eachElementPredicate:Function):IList
+		{
+			var taken:Array = []
+			
+			for each (var element:* in collection)
+			{
+				if (eachElementPredicate(element))
+				{
+					taken.push(element)
+				}
+				else
+				{
+					break
+				}
+			}
+			
+			return new ArrayList(taken)
+		}
+		
+		public function concat(list:IList):IList
+		{
+			var listArray:Array = list.toArray()
+			return new ArrayList(collection.concat(listArray))
+		}
+		
+		public function join(sep:*):String
+		{
+			return collection.join(sep)
+		}
+		
 		public function random():*
 		{
 			var index:int = floor(Math.random() * (collection.length - 1))
 			return collection[index]
 		}
 		
+		public function slice(startIndex:int = 0, endIndex:int = 16777215):IList
+		{
+			return new ArrayList(collection.slice(startIndex, endIndex))
+		}
+		
 		public function toMap(mappingCallback:Function):IMap
 		{
 			return new Map(toDictionary(mappingCallback))
+		}
+		
+		public function toMapIndexed(mappingCallback:Function):IMap
+		{
+			return new Map(toDictionaryIndexed(mappingCallback))
 		}
 		
 		public function toDictionary(mappingCallback:Function):Dictionary
@@ -122,6 +205,20 @@ package eu.powdermonkey.collections
 			for each (var child:* in collection)
 			{
 				var mapping:Object = mappingCallback(child)
+				dictionary[mapping.key] = mapping.value
+			}
+			
+			return dictionary
+		}
+		
+		public function toDictionaryIndexed(mappingCallback:Function):Dictionary
+		{
+			var dictionary:Dictionary = new Dictionary()
+			var index:int = 0
+			
+			for each (var child:* in collection)
+			{
+				var mapping:Object = mappingCallback(child, index++, collection.length)
 				dictionary[mapping.key] = mapping.value
 			}
 			

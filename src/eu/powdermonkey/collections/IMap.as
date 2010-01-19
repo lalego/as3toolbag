@@ -2,7 +2,13 @@ package eu.powdermonkey.collections
 {
 	public interface IMap extends IList
 	{
+		function hasValue(key:*):Boolean
+		
 		function value(key:*):*
+		
+		function get values():IList
+		
+		function hasKey(value:*):Boolean
 		
 		function key(value:*):*
 		
