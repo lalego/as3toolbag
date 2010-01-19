@@ -39,7 +39,7 @@
 <classEntry path="eu.powdermonkey.events.SyncEvent"/>
 <classEntry path="eu.powdermonkey.events.methods.listenFor"/>
 <classEntry path="eu.powdermonkey.events.methods.redispatchFrom"/>
-<classEntry path="eu.powdermonkey.events.methods.removeWhenFired"/>
+<classEntry path="eu.powdermonkey.events.methods.removeListenerWhenFired"/>
 <classEntry path="eu.powdermonkey.io.EmptyResourceGroup"/>
 <classEntry path="eu.powdermonkey.io.ILoadable"/>
 <classEntry path="eu.powdermonkey.io.IResource"/>

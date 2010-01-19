@@ -9,6 +9,17 @@ package eu.powdermonkey.view
 	
 	public class DisplayUtil
 	{
+		public static function replaceChild(original:DisplayObject, replacement:DisplayObject):*
+		{
+			var parentContainer:DisplayObjectContainer = original.parent
+			replacement.x = original.x
+			replacement.y = original.y 
+			var index:int = parentContainer.getChildIndex(original)
+			parentContainer.removeChildAt(index)
+			parentContainer.addChildAt(replacement, index)
+			return replacement
+		}
+		
 		public static function scale(displayObject:DisplayObject, scaleAmount:Number):void
 		{
 			displayObject.scaleX = scaleAmount
