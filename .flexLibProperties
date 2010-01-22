@@ -23,6 +23,7 @@
 <classEntry path="eu.powdermonkey.collections.methods.list"/>
 <classEntry path="eu.powdermonkey.collections.methods.map.idObjectMap"/>
 <classEntry path="eu.powdermonkey.collections.methods.map.keyValue"/>
+<classEntry path="eu.powdermonkey.collections.methods.map"/>
 <classEntry path="eu.powdermonkey.collections.methods.mapto"/>
 <classEntry path="eu.powdermonkey.collections.methods.maptoIndexed"/>
 <classEntry path="eu.powdermonkey.collections.methods.show"/>
@@ -75,10 +76,17 @@
 <classEntry path="eu.powdermonkey.maths.methods.atan"/>
 <classEntry path="eu.powdermonkey.maths.methods.atan2"/>
 <classEntry path="eu.powdermonkey.maths.methods.ceil"/>
+<classEntry path="eu.powdermonkey.maths.methods.clamp"/>
+<classEntry path="eu.powdermonkey.maths.methods.clampPositive"/>
 <classEntry path="eu.powdermonkey.maths.methods.cos"/>
 <classEntry path="eu.powdermonkey.maths.methods.exp"/>
 <classEntry path="eu.powdermonkey.maths.methods.floor"/>
+<classEntry path="eu.powdermonkey.maths.methods.inv"/>
+<classEntry path="eu.powdermonkey.maths.methods.isNegative"/>
+<classEntry path="eu.powdermonkey.maths.methods.isPositive"/>
 <classEntry path="eu.powdermonkey.maths.methods.log"/>
+<classEntry path="eu.powdermonkey.maths.methods.makeNegative"/>
+<classEntry path="eu.powdermonkey.maths.methods.makePositive"/>
 <classEntry path="eu.powdermonkey.maths.methods.max"/>
 <classEntry path="eu.powdermonkey.maths.methods.min"/>
 <classEntry path="eu.powdermonkey.maths.methods.pow"/>
@@ -100,6 +108,7 @@
 <classEntry path="eu.powdermonkey.view.DisplayUtil"/>
 <classEntry path="eu.powdermonkey.view.ExclusiveScreenGroup"/>
 <classEntry path="eu.powdermonkey.view.ExclusiveScreenSet"/>
+<classEntry path="eu.powdermonkey.view.ExclusiveShowableGroup"/>
 <classEntry path="eu.powdermonkey.view.IShowable"/>
 <classEntry path="eu.powdermonkey.view.StackBuilderHorizontal"/>
 <classEntry path="eu.powdermonkey.view.StackBuilderVertical"/>

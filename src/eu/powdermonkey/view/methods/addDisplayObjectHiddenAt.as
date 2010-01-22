@@ -8,7 +8,7 @@ package eu.powdermonkey.view.methods
 	{
 		return function (object:DisplayObject):void
 		{
-			object.visible = false
+			hide(object)
 			object.x = position.x
 			object.y = position.y
 			container.addChild(object)

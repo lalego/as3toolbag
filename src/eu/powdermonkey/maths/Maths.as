@@ -36,6 +36,16 @@ package eu.powdermonkey.maths
 			return 1;
 		}
 		
+		public static function isPositive(value:Number):Boolean
+		{
+			return value >= 0
+		}
+		
+		public static function isNegative(value:Number):Boolean
+		{
+			return value < 0
+		}
+		
 		/**
 		 * Convert a number to a hexadecimal string
 		 * @param dec		an integer value
@@ -89,6 +99,18 @@ package eu.powdermonkey.maths
 		public static function radians(degrees:Number):Number 
 		{
 			return degrees*DEG_2_RAD;
+		}
+		
+		public static function makeNegative(value:Number):Number
+		{
+			if (isNegative(value)) return value
+			else return -value
+		}
+		
+		public static function makePositive(value:Number):Number
+		{
+			if (isPositive(value)) return value
+			else return -value
 		}
 		
 		/**

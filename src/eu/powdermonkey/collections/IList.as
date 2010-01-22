@@ -36,7 +36,13 @@ package eu.powdermonkey.collections
 		
 		function random():*
 		
+		function reduceLeft(eachElementAccumulationCallback:Function):*
+		
 		function slice(startIndex:int = 0, endIndex:int = 16777215):IList
+		
+		function eachPair():IList
+		
+		function eachSlice(amount:int):IList
 		
 		function toMap(mappingCallback:Function):IMap
 		

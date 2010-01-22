@@ -8,6 +8,19 @@ package eu.powdermonkey.collections
 		
 	public class Map extends Proxy implements IMap
 	{
+		public static function fromArray(pairs:Array):IMap
+		{
+			var list:IList = new ArrayList(pairs)
+			var dictionary:Dictionary = new Dictionary()
+			
+			for each (var slice:IPair in list.eachPair())
+			{
+				dictionary[slice.first] = slice.second
+			}
+			
+			return new Map(dictionary) 
+		}
+		
 		public static const Empty:IMap = new Map(new Dictionary())
 		
 		private var dictionary:Dictionary
@@ -32,7 +45,7 @@ package eu.powdermonkey.collections
 				var value:* = dictionary[key] 
 				keys.push(key)
 				values.push(value)
-				valueToKey[key] = value
+				valueToKey[value] = key 
 			}
 			
 			_keys = new ArrayList(keys)
@@ -298,6 +311,57 @@ package eu.powdermonkey.collections
 		public function random():*
 		{
 			return _values.random()
+		}
+		
+		public function reduceLeft(eachElementAccumulationCallback:Function):*
+		{
+			if (_values.length)
+			{
+				return _values[0]
+			}
+			else
+			{
+				var accumulation:* = _values[0]
+				var element:*
+				
+				for (var i:int=1; i<_values.length; ++i)
+				{
+					element = _values[i]
+					accumulation = eachElementAccumulationCallback(accumulation, element)
+				}
+				
+				return accumulation
+			}
+		}
+		
+		public function eachPair():IList
+		{
+			var pairs:Array = []
+			var i:int=0
+			var maxLength:int = 
+				_values.length % 2 == 0
+					? _values.length
+					: _values.length - 1  
+			
+			while (i<maxLength)
+			{
+				pairs.push(new Pair(_values[i], _values[++i]))
+				++i
+			}
+			
+			return new ArrayList(pairs)
+		}
+		
+		public function eachSlice(amount:int):IList
+		{
+			var slices:Array = []
+			
+			for (var i:int=0; i<_values.length; i+=amount)
+			{
+				slices.push(_values.slice(i, amount))
+			}
+			
+			return new ArrayList(slices)
 		}
 		
 		public function slice(startIndex:int = 0, endIndex:int = 16777215):IList

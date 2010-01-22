@@ -183,9 +183,56 @@ package eu.powdermonkey.collections
 			return collection[index]
 		}
 		
+		public function reduceLeft(eachElementAccumulationCallback:Function):*
+		{
+			if (collection.length == 0) return null
+			if (collection.length == 1)	return collection[0]
+			
+			var accumulation:* = collection[0]
+			var element:*
+			
+			for (var i:int=1; i<collection.length; ++i)
+			{
+				element = collection[i]
+				accumulation = eachElementAccumulationCallback(accumulation, element)
+			}
+			
+			return accumulation
+		}
+		
 		public function slice(startIndex:int = 0, endIndex:int = 16777215):IList
 		{
 			return new ArrayList(collection.slice(startIndex, endIndex))
+		}
+		
+		public function eachPair():IList
+		{
+			var pairs:Array = []
+			var i:int=0
+			var maxLength:int = 
+				collection.length % 2 == 0
+					? collection.length
+					: collection.length - 1  
+			
+			while (i<maxLength)
+			{
+				pairs.push(new Pair(collection[i], collection[++i]))
+				++i
+			}
+			
+			return new ArrayList(pairs)
+		}
+		
+		public function eachSlice(amount:int):IList
+		{
+			var slices:Array = []
+			
+			for (var i:int=0; i<collection.length; i+=amount)
+			{
+				slices.push(new ArrayList(collection.slice(i, amount)))
+			}
+			
+			return new ArrayList(slices)
 		}
 		
 		public function toMap(mappingCallback:Function):IMap
