@@ -313,25 +313,38 @@ package eu.powdermonkey.collections
 			return _values.random()
 		}
 		
+		public function foldLeft(initialValue:*, eachElementAccumulationCallback:Function):*
+		{
+			if (_values.length == 0) 	return null
+			if (_values.length == 1)	return initialValue
+			
+			var accumulation:* = initialValue
+			var element:*
+			
+			for (var i:int=0; i<_values.length; ++i)
+			{
+				element = _values[i]
+				accumulation = eachElementAccumulationCallback(accumulation, element)
+			}
+			
+			return accumulation
+		}
+		
 		public function reduceLeft(eachElementAccumulationCallback:Function):*
 		{
-			if (_values.length)
+			if (_values.length == 0) 	return null
+			if (_values.length == 1)	return _values[0]
+			
+			var accumulation:* = _values[0]
+			var element:*
+			
+			for (var i:int=1; i<_values.length; ++i)
 			{
-				return _values[0]
+				element = _values[i]
+				accumulation = eachElementAccumulationCallback(accumulation, element)
 			}
-			else
-			{
-				var accumulation:* = _values[0]
-				var element:*
-				
-				for (var i:int=1; i<_values.length; ++i)
-				{
-					element = _values[i]
-					accumulation = eachElementAccumulationCallback(accumulation, element)
-				}
-				
-				return accumulation
-			}
+			
+			return accumulation
 		}
 		
 		public function eachPair():IList

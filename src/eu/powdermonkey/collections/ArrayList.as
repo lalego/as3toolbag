@@ -11,7 +11,7 @@ package eu.powdermonkey.collections
 	{
 		public static const Empty:IList = new ArrayList([])
 		
-		private var collection:Array = []
+		protected var collection:Array = []
 		
 		private var index:uint = 0
 		
@@ -181,6 +181,23 @@ package eu.powdermonkey.collections
 		{
 			var index:int = floor(Math.random() * (collection.length - 1))
 			return collection[index]
+		}
+		
+		public function foldLeft(initialValue:*, eachElementAccumulationCallback:Function):*
+		{
+			if (collection.length == 0) return null
+			if (collection.length == 1)	return initialValue
+			
+			var accumulation:* = initialValue
+			var element:*
+			
+			for (var i:int=0; i<collection.length; ++i)
+			{
+				element = collection[i]
+				accumulation = eachElementAccumulationCallback(accumulation, element)
+			}
+			
+			return accumulation
 		}
 		
 		public function reduceLeft(eachElementAccumulationCallback:Function):*

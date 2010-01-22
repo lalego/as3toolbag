@@ -36,6 +36,8 @@ package eu.powdermonkey.collections
 		
 		function random():*
 		
+		function foldLeft(initialValue:*, eachElementAccumulationCallback:Function):*
+		
 		function reduceLeft(eachElementAccumulationCallback:Function):*
 		
 		function slice(startIndex:int = 0, endIndex:int = 16777215):IList
