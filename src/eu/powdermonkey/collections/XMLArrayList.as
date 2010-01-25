@@ -9,6 +9,8 @@ package eu.powdermonkey.collections
 	{
 		private var xmlList:XMLList
 		
+		private var collection:Array = []
+		
 		public function XMLArrayList(xmlList:XMLList)
 		{
 			super(xmlListToArray(xmlList))

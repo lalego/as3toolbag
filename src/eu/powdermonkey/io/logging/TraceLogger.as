@@ -1,14 +1,17 @@
 package eu.powdermonkey.io.logging
 {
-	import eu.powdermonkey.utils.StringUtil;
+	import eu.powdermonkey.io.logging.formatters.IFormatter;
 	
 	public class TraceLogger extends AbstractLogger
 	{
-		override protected function log(type:String, messages:Array):void
+		public function TraceLogger(formatter:IFormatter)
 		{
-			messages.unshift(buildLogPrefix(type))
-			var logMessage:String = StringUtil.intersperseSpace.apply(null, messages)
-			trace(logMessage)
+			super(formatter)
+		}
+		
+		override protected function log(type:String, message:String):void
+		{
+			trace(message)
 		}
 	}
 }

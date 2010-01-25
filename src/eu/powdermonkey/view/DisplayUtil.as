@@ -189,21 +189,15 @@ package eu.powdermonkey.view
 			)
 		}
 		
-		public static function createAndPositionMask(object:DisplayObject):Sprite
+		public static function createAndPositionMask(clip:DisplayObject, color:int=0x0000FF):Sprite
 		{
-			var mask:Sprite = createMask(object)
-			mask.x = object.x
-			mask.y = object.y
-			return mask
-		}
-		
-		public static function createMask(object:DisplayObject):Sprite
-		{
-			var mask:Sprite = new Sprite()
-			mask.graphics.beginFill(0x0000FF)
-			mask.graphics.drawRect(0, 0, object.width, object.height)
-			mask.graphics.endFill()
-			return mask
+			var rectangle:Sprite = new Sprite()
+			rectangle.graphics.beginFill(color)
+			rectangle.graphics.drawRect(0, 0, clip.width, clip.height)
+			rectangle.graphics.endFill()
+			rectangle.x = clip.x
+			rectangle.y = clip.y
+			return rectangle
 		}
 		
 		/**

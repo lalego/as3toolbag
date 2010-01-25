@@ -1,55 +1,50 @@
 package eu.powdermonkey.io.logging
 {
-	import eu.powdermonkey.utils.StringUtil;
+	import eu.powdermonkey.io.logging.formatters.IFormatter;
 	
 	public class AbstractLogger implements ILogger
 	{
+		private var formatter:IFormatter
+		
+		public function AbstractLogger(formatter:IFormatter)
+		{
+			this.formatter = formatter
+		}
+		
 		public function warning(... messages):void
 		{
-			log('Warning', messages)
+			logMessage('Warning', messages)
 		}
 		
 		public function error(... messages):void
 		{
-			log('Error', messages)
+			logMessage('Error', messages)
 		}
 		
 		public function info(... messages):void
 		{
-			log('Info', messages)
+			logMessage('Info', messages)
 		}
 		
 		public function debug(... messages):void
 		{
-			log('Debug', messages)
+			logMessage('Debug', messages)
 		}
 		
 		/**
-		 * 
 		 * @param type
 		 * @param messages
-		 * 
 		 */		
-		protected function log(type:String, messages:Array):void
+		private function logMessage(type:String, messages:Array):void
 		{
-			messages.unshift(buildLogPrefix(type))
-			trace.apply(null, messages)
+			messages.unshift(type)
+			var message:String = formatter.format.apply(null, messages)
+			log(type, message)
 		}
 		
-		/**
-		 * 
-		 * @param type
-		 * @return 
-		 * 
-		 */
-		protected function buildLogPrefix(type:String):String
+		protected function log(type:String, message:String):void
 		{
-			return '[' + type + ': ' + timeStamp() + ']:' 
-		}
-		
-		protected function timeStamp():String
-		{
-			return new Date().toString()
+			trace(message)
 		}
 	}
 }

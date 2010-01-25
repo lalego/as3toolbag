@@ -11,7 +11,7 @@ package eu.powdermonkey.collections
 	{
 		public static const Empty:IList = new ArrayList([])
 		
-		protected var collection:Array = []
+		private var collection:Array = []
 		
 		private var index:uint = 0
 		

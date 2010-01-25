@@ -1,6 +1,6 @@
 package eu.powdermonkey.maths
 {
-	import eu.powdermonkey.utils.StringUtil;
+	import eu.powdermonkey.utils.strings.intersperseSpaces;
 	
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -79,7 +79,7 @@ package eu.powdermonkey.maths
 		
 		public function toString():String
 		{
-			return StringUtil.intersperseSpace('width:', _width, 'height:', _height) 
+			return intersperseSpaces('width:', _width, 'height:', _height) 
 		}
 	}
 }

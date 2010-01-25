@@ -1,6 +1,7 @@
 package eu.powdermonkey.io.logging
 {
-	import eu.powdermonkey.utils.StringUtil;
+	import eu.powdermonkey.io.logging.formatters.IFormatter;
+	
 	import flash.external.ExternalInterface;
 	
 	/**
@@ -9,11 +10,14 @@ package eu.powdermonkey.io.logging
 	 */	
 	public class FirebugConsoleLogger extends AbstractLogger
 	{
-		override protected function log(type:String, messages:Array):void
+		public function FirebugConsoleLogger(formatter:IFormatter)
 		{
-			messages.unshift(buildLogPrefix(type))
-			var logMessage:String = StringUtil.intersperseSpace.apply(null, messages)
-			ExternalInterface.call('console.' + type.toLowerCase(), logMessage)
+			super(formatter)
+		}
+		
+		override protected function log(type:String , message:String):void
+		{
+			ExternalInterface.call('console.' + type.toLowerCase(), message)
 		}
 	}
 }

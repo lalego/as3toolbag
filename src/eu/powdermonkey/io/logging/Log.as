@@ -1,39 +1,41 @@
 package eu.powdermonkey.io.logging
 {
+	import eu.powdermonkey.io.logging.formatters.IFormatter;
+	
 	public class Log
 	{
-		private static var _logger:ILogger
+		private static var logger:ILogger
 		
 		public static function activeLogger(instance:ILogger):void
 		{
-			if (_logger != null)
+			if (logger != null)
 			{
-				_logger.warning("An attempt was made to set another logger instance while a logger was already active")	
+				logger.warning("An attempt was made to set another logger instance while a logger was already active")	
 			}
 			else
 			{
-				_logger = instance
+				logger = instance
 			}
 		} 
 		
 		public static function warning(... messages):void
 		{
-			_logger.warning.apply(null, messages)
+			logger.warning.apply(null, messages)
 		}
 		
 		public static function error(... messages):void
 		{
-			_logger.error.apply(null, messages)
+			logger.error.apply(null, messages)
 		}
 		
 		public static function info(... messages):void
 		{
-			_logger.info.apply(null, messages)
+			logger.info.apply(null, messages)
 		}
 		
 		public static function debug(... messages):void
 		{
-			_logger.debug.apply(null, messages)
+			logger.debug.apply(null, messages)
 		}
 	}
 }

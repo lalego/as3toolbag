@@ -72,14 +72,19 @@ package eu.powdermonkey.collections
 			return new Map(dictionary)
 		}
 		
+		override flash_proxy function hasProperty(name:*):Boolean
+		{
+			return name in dictionary
+		}
+		
 		override flash_proxy function getProperty(name:*):*
 		{
-			throw new Error('[] operator cannot be implemented, use function get value(key:*):* instead')
+			return dictionary[name]
 		}
 		
 		override flash_proxy function setProperty(name:*, value:*):void
 		{
-			throw new Error('[] operator cannot be implemented, use function get value(key:*):* instead')
+			throw new Error('This map is read only. Use the Dictionary class instead')
 		}
 		
 		override flash_proxy function nextNameIndex(index:int):int
@@ -315,7 +320,7 @@ package eu.powdermonkey.collections
 		
 		public function foldLeft(initialValue:*, eachElementAccumulationCallback:Function):*
 		{
-			if (_values.length == 0) 	return null
+			if (_values.length == 0) return null
 			if (_values.length == 1)	return initialValue
 			
 			var accumulation:* = initialValue
@@ -332,19 +337,23 @@ package eu.powdermonkey.collections
 		
 		public function reduceLeft(eachElementAccumulationCallback:Function):*
 		{
-			if (_values.length == 0) 	return null
-			if (_values.length == 1)	return _values[0]
-			
-			var accumulation:* = _values[0]
-			var element:*
-			
-			for (var i:int=1; i<_values.length; ++i)
+			if (_values.length)
 			{
-				element = _values[i]
-				accumulation = eachElementAccumulationCallback(accumulation, element)
+				return _values[0]
 			}
-			
-			return accumulation
+			else
+			{
+				var accumulation:* = _values[0]
+				var element:*
+				
+				for (var i:int=1; i<_values.length; ++i)
+				{
+					element = _values[i]
+					accumulation = eachElementAccumulationCallback(accumulation, element)
+				}
+				
+				return accumulation
+			}
 		}
 		
 		public function eachPair():IList

@@ -22,7 +22,7 @@ package eu.powdermonkey.utils
 		 
 		public static const MILLISECONDS_PER_DAY:Number = 1000 * 60 * 60 * 24
 		
-		public static function intersperseSpace(...tokens):String
+		public static function intersperseSpaces(...tokens):String
 		{
 			tokens.unshift(' ')
 			return intersperse.apply(null, tokens)
