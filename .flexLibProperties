@@ -121,6 +121,7 @@
 <classEntry path="eu.powdermonkey.view.methods.addDisplayObjectHiddenAt"/>
 <classEntry path="eu.powdermonkey.view.methods.addDisplayObjectHiddenTo"/>
 <classEntry path="eu.powdermonkey.view.methods.addDisplayObjectTo"/>
+<classEntry path="eu.powdermonkey.view.methods.forAllChildren"/>
 <classEntry path="eu.powdermonkey.view.methods.hide"/>
 <classEntry path="eu.powdermonkey.view.methods.hideOnEvent"/>
 <classEntry path="eu.powdermonkey.view.methods.positionAt"/>
