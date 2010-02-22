@@ -191,5 +191,17 @@ package eu.powdermonkey.collections
 			
 			return dictionary
 		}
+		
+		public static function copyToDictionaryKeyValue(array:Array):Dictionary
+		{
+			var dictionary:Dictionary = new Dictionary()
+			
+			for each (var child:* in array)
+			{
+				dictionary[child] = child
+			}
+			
+			return dictionary
+		}
 	}
 }
