@@ -1,6 +1,7 @@
 package eu.powdermonkey.io
 {
 	import eu.powdermonkey.events.EventUtil;
+	import eu.powdermonkey.io.logging.methods.error;
 	
 	import flash.display.Loader;
 	import flash.events.ErrorEvent;
@@ -162,6 +163,7 @@ package eu.powdermonkey.io
 		
 		private function onError(event:ErrorEvent):void
 		{
+			error(event.text)
 			_failure = new Error(event.text)
 		}
 		

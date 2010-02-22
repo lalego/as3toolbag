@@ -1,5 +1,7 @@
 package eu.powdermonkey.io
 {
+	import eu.powdermonkey.io.logging.methods.error;
+	
 	import flash.events.Event;
 	import flash.net.URLVariables;
 	
@@ -25,9 +27,9 @@ package eu.powdermonkey.io
 			}
 		}
 		
-		protected function onXMLParseFail(error:Error):void
+		protected function onXMLParseFail(err:Error):void
 		{
-			trace(id, " XML is invalid:", error)
+			error(id, " XML is invalid:", err)
 		}
 		
 		protected function get xml():XML
