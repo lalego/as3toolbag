@@ -175,6 +175,16 @@ package eu.powdermonkey.io
 			return _url
 		}
 		
+		public function get hasURLVariables():Boolean
+		{
+			return _urlVariables != null 
+		}
+		
+		public function get urlVariables():URLVariables
+		{
+			return _urlVariables
+		}
+		
 		public function get content():*
 		{
 			return _content
