@@ -14,7 +14,7 @@
 		<mkdir dir="${output.dir}" />
 	</target>
 
-	<target name="tests">
+	<target name="test">
 
 		<taskdef resource="flexTasks.tasks" classpath="${flextask.jar}" />
 
