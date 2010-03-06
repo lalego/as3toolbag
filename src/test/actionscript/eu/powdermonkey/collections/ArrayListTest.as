@@ -1,14 +1,25 @@
 package eu.powdermonkey.collections
 {
-	import asunit.framework.TestCase;
-
-	public class ArrayListTest extends TestCase
+	import asunit.asserts.*
+	
+	public class ArrayListTest
 	{
-		override public function ArrayListTest(testMethod:String=null)
+		[Before]
+		public function setup():void
 		{
-			super(testMethod)
+			
 		}
 		
+		[After]
+		public function tearDown():void
+		{
+			
+		}
 		
+		[Test]
+		public function lengthShouldBeOne():void
+		{
+			
+		}
 	}
 }
