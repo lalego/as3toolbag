@@ -21,6 +21,7 @@
 		<mxmlc file="${test.main}" output="${tests.output}"
 			incremental="true" debug="false"
 			static-link-runtime-shared-libraries="true">
+			<source-path path-element="${src.dir}" />
 			<source-path path-element="${tests.dir}" />
 			<load-config filename="${flex.config}" />
 			<library-path dir="${flex.lib}" append="true">
