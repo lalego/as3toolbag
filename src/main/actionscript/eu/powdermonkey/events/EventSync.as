@@ -1,7 +1,5 @@
 package eu.powdermonkey.events
 {
-	import __AS3__.vec.Vector;
-	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -11,7 +9,7 @@ package eu.powdermonkey.events
 	{
 		private var _waitingOn:Dictionary = new Dictionary()
 		
-		private var _received:Vector.<Event> = new Vector.<Event>()
+		private var _received:Array = []
 		
 		private var _dependancyAmount:int = 0
 		
@@ -67,7 +65,6 @@ package eu.powdermonkey.events
 }
 
 import flash.utils.Dictionary;
-import __AS3__.vec.Vector;
 import flash.events.Event;
 
 class EventTypeBag

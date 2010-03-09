@@ -1,7 +1,5 @@
 package eu.powdermonkey.events
 {
-	import __AS3__.vec.Vector;
-	
 	import flash.events.Event;
 	import flash.utils.getQualifiedClassName;
 
@@ -9,15 +7,15 @@ package eu.powdermonkey.events
 	{
 		public static const ACTIVATE:String = getQualifiedClassName(SyncEvent) + '.ACTIVATE'
 		
-		private var _events:Vector.<Event>
+		private var _events:Array
 		
-		public function SyncEvent(events:Vector.<Event>)
+		public function SyncEvent(events:Array)
 		{
 			_events = events
 			super(SyncEvent.ACTIVATE, false, false);
 		}
 		
-		public function get events():Vector.<Event>
+		public function get events():Array
 		{
 			return _events 
 		}

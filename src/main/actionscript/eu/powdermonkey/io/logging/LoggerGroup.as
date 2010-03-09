@@ -1,14 +1,12 @@
 package eu.powdermonkey.io.logging
 {
-	import __AS3__.vec.Vector;
-	
 	public class LoggerGroup implements ILogger
 	{
-		private var _loggers:Vector.<ILogger> = new Vector.<ILogger>()
+		private var _loggers:Array = []
 		
 		public function LoggerGroup(... loggers)
 		{
-			_loggers = Vector.<ILogger>(loggers)
+			_loggers = loggers
 		}
 		
 		public function warning(... messages):void

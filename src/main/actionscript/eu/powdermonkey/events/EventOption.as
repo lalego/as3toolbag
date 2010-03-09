@@ -1,13 +1,11 @@
 package eu.powdermonkey.events
 {
-	import __AS3__.vec.Vector;
-	
 	import flash.events.IEventDispatcher;
 	import flash.events.Event;
 	
 	public class EventOption
 	{
-		private var _options:Vector.<EventRegistration> = new Vector.<EventRegistration>
+		private var _options:Array = []
 		
 		public function addOption(eventDispatcher:IEventDispatcher, listenForType:String, callback:Function):EventOption
 		{
