@@ -1,8 +1,9 @@
 package eu.powdermonkey.view
 {
+	import eu.powdermonkey.module_access;
+	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import eu.powdermonkey.module_access;
 	
 	public class DepthSorter
 	{
@@ -54,13 +55,18 @@ class Action
 	public function behindOf(pivot:DisplayObject):void
 	{
 		_depthSorter.validate(pivot)
-		toIndex(getIndex(pivot) - 1)
+		var index:int = getIndex(pivot)
+		var newIndex:int = index > 0 ? index - 1 : 0  
+		toIndex(newIndex)
 	}
 	
 	public function infrontOf(pivot:DisplayObject):void
 	{
 		_depthSorter.validate(pivot)
-		toIndex(getIndex(pivot) + 1)
+		var lastIndex:int = _depthSorter.container.numChildren - 1
+		var index:int = getIndex(pivot)
+		var newIndex:int = index < lastIndex ? index + 1 : lastIndex
+		toIndex(newIndex)
 	}
 	
 	private function getIndex(view:DisplayObject):int
