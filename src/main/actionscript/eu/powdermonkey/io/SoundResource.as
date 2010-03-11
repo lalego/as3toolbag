@@ -98,6 +98,12 @@ package eu.powdermonkey.io
 		
 		public function play():SoundChannel 
 		{
+			if (_soundChannel)
+			{
+				_soundChannel.stop()
+				_soundChannel.removeEventListener(Event.SOUND_COMPLETE, onSoundComplete, false)
+			}
+			
 			_soundChannel = sound.play(0, isInfinteLoop ? int.MAX_VALUE : _loopAmount)
 			_isPlaying = true 
 			_soundChannel.addEventListener(Event.SOUND_COMPLETE, onSoundComplete, false, 0, true)
@@ -106,24 +112,6 @@ package eu.powdermonkey.io
 			
 			return _soundChannel
 		}
-		
-//		public function playToVolume(volumeTarget:Number=1, timeMilli:int=1000):void
-//		{
-//			if (isPlaying == false)
-//			{
-//				play()
-//			}
-//			
-//			Tweener.addTween
-//			(
-//				_soundChannel,
-//				{
-//					_sound_volume: volumeTarget,
-//					time: timeMilli / 1000,
-//					transition: "linear"
-//				}
-//			)
-//		}
 		
 		public function get isPlaying():Boolean
 		{
@@ -145,27 +133,6 @@ package eu.powdermonkey.io
 				_isPlaying = false
 			}
 		}
-		
-//		public function stopToVolume(volumeTarget:Number=0, timeMilli:int=1000):void
-//		{
-//			if (isPlaying)
-//			{
-//				Tweener.addTween
-//				(
-//					_soundChannel,
-//					{
-//						_sound_volume: volumeTarget,
-//						time: timeMilli / 1000,
-//						transition: "linear",
-//						onComplete: 
-//							function ():void
-//							{
-//								stop()
-//							}
-//					}
-//				)
-//			}
-//		}
 		
 		override public function toString():String 
 		{
