@@ -1,6 +1,9 @@
 package eu.powdermonkey.maths
 {
-	public class Range
+	import flash.utils.Proxy;
+	import flash.utils.flash_proxy;
+	
+	public class Range extends Proxy
 	{
 		private static const _unitRange:Range = new Range(0, 1) 
 		
@@ -24,19 +27,34 @@ package eu.powdermonkey.maths
 			return _unitRange.contains(value)
 		}
 		
-		public static function createRangeZeroUpto(max:Number):Range
+		public static function zeroUpto(max:Number):Range
 		{
 			return new Range(0, max)
-		} 
+		}
+		
+		public static function zeroUntil(max:Number):Range
+		{
+			return new Range(0, max-1)
+		}
 		
 		public static function isWithinRangeZeroUpto(max:Number, value:Number):Boolean
 		{
-			return createRangeZeroUpto(max).contains(value)
+			return zeroUpto(max).contains(value)
 		}
 		
 		public static function isOutsideRangeZeroUpto(max:Number, value:Number):Boolean
 		{
-			return createRangeZeroUpto(max).isOutside(value)
+			return zeroUpto(max).isOutside(value)
+		}
+		
+		public static function oneUpto(max:Number):Range
+		{
+			return new Range(1, max)
+		}
+		
+		public static function oneUntil(max:Number):Range
+		{
+			return new Range(1, max-1)
 		}
 		
 				
@@ -56,6 +74,23 @@ package eu.powdermonkey.maths
 			{
 				swapValues(min, max)
 			}
+		}
+		
+		override flash_proxy function nextNameIndex(index:int):int
+		{
+			if (index <= length) 
+			{
+				return index + 1
+			}
+			else
+			{
+				return 0
+			}
+		}		
+		
+		override flash_proxy function nextValue(index:int):*
+		{
+			return _min + index - 1		
 		}
 		
 		private function swapValues(min:Number, max:Number):void
