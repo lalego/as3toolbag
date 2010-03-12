@@ -78,13 +78,13 @@ package eu.powdermonkey.maths
 		
 		override flash_proxy function nextNameIndex(index:int):int
 		{
-			if (index <= length) 
+			if (length == 0 || index > length)
 			{
-				return index + 1
+				return 0
 			}
 			else
 			{
-				return 0
+				return index + 1
 			}
 		}		
 		
