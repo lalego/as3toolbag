@@ -1,4 +1,4 @@
-<project name="as3-toolbag" default="swc">
+<project name="as3-toolbag" default="compile">
 
 	<!-- Set up a prefix for all environment variables. -->
 	<property environment="env." />
@@ -12,33 +12,69 @@
 		<delete dir="${output.dir}" failOnError="false"
 			includeEmptyDirs="true" />
 		<mkdir dir="${output.dir}" />
+		<delete dir="${test.report.loc}" failOnError="false"
+			includeEmptyDirs="true" />
+		<mkdir dir="${test.report.loc}" />
+		<delete dir="${test.report.flexunit.loc}" failOnError="false"
+			includeEmptyDirs="true" />
+		<mkdir dir="${test.report.flexunit.loc}" />
 	</target>
 
-	<target name="test">
+	<target name="test" depends="compile">
+		<!-- FlexUnit config -->
+		<taskdef resource="flexUnitTasks.tasks"
+			classpath="${test.lib.anttasks}" />
 
-		<taskdef resource="flexTasks.tasks" classpath="${flextask.jar}" />
-
-		<mxmlc file="${test.main}" output="${tests.output}"
-			incremental="true" debug="false"
-			static-link-runtime-shared-libraries="true">
+		<!-- Test compile -->
+		<mxmlc file="${test.main}" incremental="true" debug="false"
+			output="${test.output}">
 			<source-path path-element="${src.dir}" />
-			<source-path path-element="${tests.dir}" />
-			<load-config filename="${flex.config}" />
-			<library-path dir="${flex.lib}" append="true">
-				<include name="flex.swc" />
+			<source-path path-element="${test.dir}" />
+			<library-path dir="${output.dir}" append="true">
+				<include name="${output.swc}" />
 			</library-path>
 			<library-path dir="${libs.dir}" append="true">
 				<include name="*.swc" />
 			</library-path>
+			<compiler.verbose-stacktraces>
+				true
+			</compiler.verbose-stacktraces>
+			<compiler.headless-server>true</compiler.headless-server>
 		</mxmlc>
 
-		<exec executable="open" os="Mac OS X">
-			<arg line='-a "flash player" ${tests.output}' />
-		</exec>
-
+		<!-- Execution -->
+		<flexunit swf="${test.output}"
+			toDir="${test.report.flexunit.loc}" haltonfailure="false"
+			verbose="true" localTrusted="true" />
 	</target>
 
-	<target name="swc" description="Compile AS3 code into a SWC">
+	<!-- 
+		<target name="test">
+		
+		<taskdef resource="flexTasks.tasks" classpath="${flextask.jar}" />
+		
+		<mxmlc file="${test.main}" output="${tests.output}"
+		incremental="true" debug="false"
+		static-link-runtime-shared-libraries="true">
+		<source-path path-element="${src.dir}" />
+		<source-path path-element="${tests.dir}" />
+		<load-config filename="${flex.config}" />
+		<library-path dir="${flex.lib}" append="true">
+		<include name="flex.swc" />
+		</library-path>
+		<library-path dir="${libs.dir}" append="true">
+		<include name="*.swc" />
+		</library-path>
+		</mxmlc>
+		
+		<exec executable="open" os="Mac OS X">
+		<arg line='-a "flash player" ${tests.output}' />
+		</exec>
+		
+		</target>
+	-->
+
+	<target name="compile" description="Compile AS3 code into a SWC">
 		<echo>Using Flex SDK at: ${FLEX_HOME}</echo>
 
 		<taskdef resource="flexTasks.tasks" classpath="${flextask.jar}" />
@@ -68,7 +104,7 @@
 	</target>
 
 	<!-- Build Documentation -->
-	<target name="asdoc" depends="swc,clean-asdoc"
+	<target name="asdoc" depends="compile, clean-asdoc"
 		description="Create API docs for ${project.title}">
 		<echo>Generating ASDOC documentation...</echo>
 		<tstamp>

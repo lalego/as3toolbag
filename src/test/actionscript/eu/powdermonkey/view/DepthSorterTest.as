@@ -1,8 +1,8 @@
 package eu.powdermonkey.view
 {
-	import asunit.asserts.*;
-	
 	import flash.display.Sprite;
+	
+	import org.flexunit.Assert;
 	
 	public class DepthSorterTest
 	{
@@ -35,9 +35,9 @@ package eu.powdermonkey.view
 		{
 			setup()
 			depthSorter.move(insideB).behindOf(insideA)
-			assertSame(container.numChildren, 2)
-			assertSame(container.getChildAt(0), insideB)
-			assertSame(container.getChildAt(1), insideA)
+			Assert.assertEquals(container.numChildren, 2)
+			Assert.assertEquals(container.getChildAt(0), insideB)
+			Assert.assertEquals(container.getChildAt(1), insideA)
 		}
 		
 		[Test]
@@ -45,9 +45,9 @@ package eu.powdermonkey.view
 		{
 			setup()
 			depthSorter.move(insideB).infrontOf(insideA)
-			assertSame(container.numChildren, 2)
-			assertSame(container.getChildAt(0), insideA)
-			assertSame(container.getChildAt(1), insideB) 
+			Assert.assertEquals(container.numChildren, 2)
+			Assert.assertEquals(container.getChildAt(0), insideA)
+			Assert.assertEquals(container.getChildAt(1), insideB) 
 		}
 	}
 }

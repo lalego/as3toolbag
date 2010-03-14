@@ -1,8 +1,8 @@
 package eu.powdermonkey.maths
 {
-	import asunit.asserts.*;
-	
 	import eu.powdermonkey.maths.range.range;
+	
+	import org.flexunit.Assert;
 	
 	public class RangeTest
 	{
@@ -12,7 +12,7 @@ package eu.powdermonkey.maths
 			var r:Range = range(0, 0)
 			for each (var value:int in r)
 			{
-				fail()
+				Assert.fail()
 			}
 		}
 		
@@ -26,9 +26,9 @@ package eu.powdermonkey.maths
 				trace('value:' + value)
 			}
 			
-			assertEquals(9, r.length)
-			assertEquals(1, r.min)
-			assertEquals(10, r.max)
+			Assert.assertEquals(9, r.length)
+			Assert.assertEquals(1, r.min)
+			Assert.assertEquals(10, r.max)
 		}
 		
 		[Test]

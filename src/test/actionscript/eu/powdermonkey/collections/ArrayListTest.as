@@ -1,7 +1,5 @@
 package eu.powdermonkey.collections
 {
-	import asunit.asserts.*
-	
 	public class ArrayListTest
 	{
 		[Before]

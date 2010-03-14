@@ -1,16 +1,17 @@
 package eu.powdermonkey
 {
-	import asunit.framework.TestSuite;
-	
 	import eu.powdermonkey.collections.ArrayListTest;
 	import eu.powdermonkey.maths.RangeTest;
+	import eu.powdermonkey.signals.SignalSyncTest;
 	import eu.powdermonkey.view.DepthSorterTest;
 
 	[Suite]
-	public class AllTests extends TestSuite
+	[RunWith("org.flexunit.runners.Suite")]
+	public class AllTests
 	{
-		public var _ArrayListTest:ArrayListTest
-		public var _DepthSorterTest:DepthSorterTest
-		public var _RangeTest:RangeTest
+		public var arrayListTest:ArrayListTest
+		public var depthSorterTest:DepthSorterTest
+		public var rangeTest:RangeTest
+		public var signalSyncTest:SignalSyncTest
 	}
 }
