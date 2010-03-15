@@ -1,7 +1,5 @@
 package eu.powdermonkey.io.logging
 {
-	import eu.powdermonkey.io.logging.formatters.IFormatter;
-	
 	public class Log
 	{
 		private static var logger:ILogger

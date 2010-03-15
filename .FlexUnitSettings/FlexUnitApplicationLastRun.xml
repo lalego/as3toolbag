@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testrun name="" >
+<testsuite  name="Default Test Suite" project="as3toolbag">
+<testsuite name="eu.powdermonkey.maths:RangeTest" type="testcaseclass">
+<testcase name="zeroRangeShouldNotIterate" classname="eu.powdermonkey.maths:RangeTest"/>
+<testcase name="shoundIterate" classname="eu.powdermonkey.maths:RangeTest"/>
+<testcase name="oneToRange" classname="eu.powdermonkey.maths:RangeTest"/>
+</testsuite>
+<testsuite name="eu.powdermonkey.signals:SignalSyncTest" type="testcaseclass">
+<testcase name="shouldHandleSignalWithNoArguments" classname="eu.powdermonkey.signals:SignalSyncTest"/>
+</testsuite>
+</testsuite>
+</testrun>
