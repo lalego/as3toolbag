@@ -251,6 +251,18 @@ package eu.powdermonkey.maths
 			return _max
 		}
 		
+		public function toArray():Array
+		{
+			var rangeArray:Array = []
+			
+			for each (var value:Number in this)
+			{
+				rangeArray.push(value)
+			}
+			
+			return rangeArray
+		}
+		
 		public function toString():String
 		{
 			return '[Range ' + _min + '..' + _max + ']'
